@@ -11,19 +11,31 @@ Last updated: 2026-10-24
 - **marketnet**: PyTorch log-odds correction over market; draw logit pinned to 0 (W=0 reproduces market); L2 penalty tuned on calibration; walk-forward by season.
 - **lgbm**: LightGBM multiclass; walk-forward by season; early stopping on calibration split; SHAP TreeExplainer explanations for validation/holdout; 34 features.
 - **features**: 34-column feature table — market q/log-q, Elo diff, DC log-ratios, rest days, PPG form (last 5), league one-hot, fav/longshot signals.
-- **evaluation/forecast**: log_loss, Brier, calibration bins; inner-join across models on shared match set.
-- **contract tests**: 43/43 pass (`python -m pytest -q`).
+- **evaluation/forecast**: log_loss, Brier, calibration bins, per-league breakdown, bootstrap CI for ll-diff vs market (matchweek blocks, 2000 resamples).
+- **evaluation/policy**: ROI, max drawdown, CLV, Sharpe per matchweek, deflated Sharpe (Bailey-LdP), bootstrap 95% CI for ROI, line-shopping value (controlled_best_price vs controlled).
+- **evaluation/bootstrap**: Matchweek-block bootstrap for ROI CI and paired diff CI.
+- **evaluation/lock_holdout**: Writes holdout_locked.json once, refuses overwrite.
+- **Real artifacts**: Marlon's 8-league data (62k matches, 2005-06 to 2025-26) integrated. All 5 models run successfully.
+- **contract tests + model tests + evaluation tests**: 59/59 pass (`python -m pytest -q`).
 - Golden parquet regeneration works (`python -m contract.golden.generate_golden`).
+
+## Validation headline numbers (2024-25, 2916 common matches)
+
+| Model | Log loss | Brier | vs market |
+|---|---|---|---|
+| marketnet | **0.9705** | 0.5780 | −0.0021 (CI [−0.0033, −0.0008]) ✓ sig |
+| lgbm | 0.9709 | 0.5782 | −0.0016 (CI [−0.0034, +0.0002]) borderline |
+| market | 0.9725 | 0.5790 | baseline |
+| elo | 0.9990 | 0.5974 | +0.0265 worse |
+| dixon_coles | 1.0008 | 0.5984 | +0.0283 worse |
+
+**Recommended model for freeze: marketnet** (lowest log loss, statistically significant edge over market).
 
 ## Stubbed or partial
 
-- **evaluation/policy**: ROI, CLV, Sharpe, drawdown, three-policy comparison — not yet implemented (Phase 4).
-- **evaluation/bootstrap**: Bootstrap CIs for ROI — not yet implemented (Phase 4).
-- **evaluation/lock_holdout**: Holdout lock — not yet implemented (Phase 4).
-- **policy_metrics.json**: Not yet written (needs evaluation/policy.py).
-- **holdout_locked.json**: Not yet written (needs evaluation/lock_holdout.py).
-- **model_card.md**: Not yet written.
-- **Real artifacts**: Using golden synthetic data. Real artifacts from Marlon's Part 1 not yet integrated.
+- **holdout_locked.json**: Written at the freeze only (`python -m evaluation.lock_holdout`). Refuses to overwrite.
+- **policy_metrics for dixon_coles / marketnet / lgbm**: Marlon's decisions.parquet (Part 1) currently only covers `market` and `elo`. Once he re-runs Part 1 with our predictions.parquet, all 5 models will appear in policy_metrics.json automatically.
+- **model_card.md validation numbers**: marketnet and lgbm values now filled in (real data run complete).
 
 ## How to run
 
