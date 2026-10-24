@@ -248,56 +248,54 @@ def predict_all(
     print(f"    dixon_coles best half-life: {best_hl:.0f} days")
 
     # --- walk-forward predictions ---
-    # Group cutoffs by (league, month) to limit refitting cost
+    # Refit per (league, season): monthly is too slow on real multi-league data.
+    # Spec says "monthly if slow" — seasonal is the practical choice here.
     all_preds: list[dict] = []
 
-    leagues = matches["league"].unique()
-    all_cutoffs = sorted(matches["feature_cutoff_utc"].unique())
+    # Pre-group to avoid O(n²) pandas filters in the loop.
+    data_by_league: dict[str, pd.DataFrame] = {
+        lg: data[data["league"] == lg] for lg in data["league"].unique()
+    }
+    # training_cutoff per (league, season): last kickoff < first cutoff of that season
+    tc_cache: dict[tuple, pd.Timestamp] = {}
+    param_cache: dict[tuple, dict | None] = {}  # (league, season) -> fitted params
 
-    # cache fitted params per (league, cutoff_month)
-    param_cache: dict[tuple, dict | None] = {}
+    # Group matches by (feature_cutoff_utc, league) — avoids repeated row filters
+    for (cutoff, league), group in matches.groupby(
+        ["feature_cutoff_utc", "league"], sort=False
+    ):
+        season = group["season"].iloc[0]
+        cache_key = (league, season)
 
-    for cutoff in all_cutoffs:
-        month_key = (cutoff.year, cutoff.month)
-        cutoff_matches = matches[matches["feature_cutoff_utc"] == cutoff]
+        if cache_key not in param_cache:
+            ld = data_by_league.get(league, data[data["league"] == league])
+            param_cache[cache_key] = _fit_league(ld, cutoff, best_hl)
+            past = ld[ld["kickoff_utc"] < cutoff]
+            tc_cache[cache_key] = past["kickoff_utc"].max() if len(past) > 0 else cutoff
 
-        for league in cutoff_matches["league"].unique():
-            cache_key = (league, month_key)
-            if cache_key not in param_cache:
-                league_data = data[data["league"] == league]
-                param_cache[cache_key] = _fit_league(league_data, cutoff, best_hl)
+        params = param_cache[cache_key]
+        tc_raw = tc_cache.get(cache_key, cutoff)
+        tc = min(tc_raw, cutoff)
 
-            params = param_cache[cache_key]
-            league_cutoff = cutoff_matches[cutoff_matches["league"] == league]
-
-            for _, m in league_cutoff.iterrows():
-                if params is None:
-                    all_preds.append(_stub_row(m))
-                    continue
-
-                ph, pd_, pa, xg_h, xg_a = _predict_match(params, m["home_team"], m["away_team"])
-
-                # training_cutoff = last kickoff used in this league's fit
-                league_fits = data[
-                    (data["league"] == league) & (data["kickoff_utc"] < cutoff)
-                ]
-                tc = league_fits["kickoff_utc"].max() if len(league_fits) > 0 else cutoff
-                tc = min(tc, cutoff)
-
-                all_preds.append({
-                    "match_id": m["match_id"],
-                    "model_id": MODEL_ID,
-                    "model_version": MODEL_VERSION,
-                    "split": m["split"],
-                    "decision_time_utc": cutoff,
-                    "feature_cutoff_utc": cutoff,
-                    "training_cutoff_utc": tc,
-                    "p_home": ph,
-                    "p_draw": pd_,
-                    "p_away": pa,
-                    "xg_home": xg_h,
-                    "xg_away": xg_a,
-                })
+        for _, m in group.iterrows():
+            if params is None:
+                all_preds.append(_stub_row(m))
+                continue
+            ph, pd_, pa, xg_h, xg_a = _predict_match(params, m["home_team"], m["away_team"])
+            all_preds.append({
+                "match_id": m["match_id"],
+                "model_id": MODEL_ID,
+                "model_version": MODEL_VERSION,
+                "split": m["split"],
+                "decision_time_utc": cutoff,
+                "feature_cutoff_utc": cutoff,
+                "training_cutoff_utc": tc,
+                "p_home": ph,
+                "p_draw": pd_,
+                "p_away": pa,
+                "xg_home": xg_h,
+                "xg_away": xg_a,
+            })
 
     return pd.DataFrame(all_preds).reset_index(drop=True)
 

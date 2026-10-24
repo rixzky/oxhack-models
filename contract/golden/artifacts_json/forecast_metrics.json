@@ -69,7 +69,7 @@
           "bin_lo": 0.8,
           "bin_hi": 0.9,
           "n": 14,
-          "mean_pred": 0.8477696848727895,
+          "mean_pred": 0.8477696848727897,
           "obs_freq": 0.7857142857142857
         },
         {
@@ -155,7 +155,7 @@
           "bin_lo": 0.9,
           "bin_hi": 1.0,
           "n": 14,
-          "mean_pred": 0.9191295335960353,
+          "mean_pred": 0.9191295335960354,
           "obs_freq": 1.0
         }
       ]
@@ -639,7 +639,7 @@
       "split": "validation",
       "n": 146,
       "log_loss": 0.8210917333143297,
-      "brier_sum3": 0.4774646688333056,
+      "brier_sum3": 0.4774646688333055,
       "calibration_bins": [
         {
           "bin_lo": 0.0,
@@ -717,7 +717,7 @@
       "model_id": "lgbm",
       "split": "warmup",
       "n": 146,
-      "log_loss": 1.008781430976937,
+      "log_loss": 1.0087814309769372,
       "brier_sum3": 0.5945923282437305,
       "calibration_bins": [
         {

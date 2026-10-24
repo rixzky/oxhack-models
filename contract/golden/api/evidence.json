@@ -88,7 +88,7 @@
       "split": "validation",
       "n": 146,
       "log_loss": 0.8210917333143297,
-      "brier_sum3": 0.4774646688333056,
+      "brier_sum3": 0.4774646688333055,
       "calibration_bins": [
         {
           "bin_lo": 0.0,
@@ -254,7 +254,7 @@
       "roi": 0.0070000000000000106,
       "max_drawdown": 32.60000000000002,
       "mean_clv": -0.03962503909440289,
-      "sharpe_per_matchweek": 0.004934027412517383,
+      "sharpe_per_matchweek": 0.004934027412517384,
       "deflated_sharpe": null,
       "reason_counts": {
         "EV_BELOW_THRESHOLD": 94,

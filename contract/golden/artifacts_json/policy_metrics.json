@@ -19,7 +19,7 @@
           "roi": 0.04090909090909091,
           "max_drawdown": 20.0,
           "mean_clv": -0.04272599390913387,
-          "sharpe_per_matchweek": 0.03220165213526429,
+          "sharpe_per_matchweek": 0.0322016521352643,
           "deflated_sharpe": null,
           "reason_counts": {
             "EV_BELOW_THRESHOLD": 89,
@@ -654,7 +654,7 @@
           "roi": -0.19910256410256408,
           "max_drawdown": 199.9000000000001,
           "mean_clv": -0.03700455356860193,
-          "sharpe_per_matchweek": -0.17556545227048176,
+          "sharpe_per_matchweek": -0.1755654522704818,
           "deflated_sharpe": null,
           "reason_counts": {
             "ACCEPTED": 78,
@@ -1755,7 +1755,7 @@
           "roi": 0.09322580645161292,
           "max_drawdown": 99.29999999999995,
           "mean_clv": 0.03600734487045472,
-          "sharpe_per_matchweek": 0.07192036435040855,
+          "sharpe_per_matchweek": 0.07192036435040852,
           "deflated_sharpe": null,
           "reason_counts": {
             "ACCEPTED": 62,
@@ -3979,7 +3979,7 @@
           "roi": 0.0070000000000000106,
           "max_drawdown": 32.60000000000002,
           "mean_clv": -0.03962503909440289,
-          "sharpe_per_matchweek": 0.004934027412517383,
+          "sharpe_per_matchweek": 0.004934027412517384,
           "deflated_sharpe": null,
           "reason_counts": {
             "EV_BELOW_THRESHOLD": 94,
