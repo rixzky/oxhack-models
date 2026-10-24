@@ -309,10 +309,11 @@ def _stub_row(row: pd.Series) -> dict:
 
 
 def _log_trial(path: Path, lam: float, hl: float, val_ll: float) -> None:
-    import datetime
+    import datetime, math
+    ll = None if not math.isfinite(val_ll) else round(float(val_ll), 6)
     entry = {"time": datetime.datetime.utcnow().isoformat() + "Z",
              "part": 2, "model_id": MODEL_ID, "model_version": MODEL_VERSION,
              "what_changed": f"lambda={float(lam)} half_life={float(hl)}d",
-             "val_log_loss": round(float(val_ll), 6)}
+             "val_log_loss": ll}
     with open(path, "a") as f:
         f.write(json.dumps(entry) + "\n")

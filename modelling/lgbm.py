@@ -140,6 +140,8 @@ def predict_all(
                     m = _fit(X_tt, y_tt, X_cal, y_cal, sample_weight=sw)
                     probs = m.predict(X_cal)
                     ll = -np.log(probs[np.arange(len(y_cal)), y_cal].clip(1e-15)).mean()
+                    if trials_path:
+                        _log_trial(trials_path, m.num_trees(), f"hl_tune half_life={hl}d", hl, float(ll))
                     if ll < best_ll_hl:
                         best_ll_hl, best_hl = ll, hl
             hl_tuned = True
@@ -178,8 +180,6 @@ def predict_all(
         X_pred, _ = _prep(season_feat)
         probs = model.predict(X_pred)   # (n, 3)
 
-        if trials_path:
-            _log_trial(trials_path, model.num_trees(), season, best_hl)
 
         for j, (_, row) in enumerate(season_feat.iterrows()):
             tc = min(training_cutoff, row["feature_cutoff_utc"])
@@ -272,11 +272,12 @@ def _stub_row(row: pd.Series, feat_table: pd.DataFrame) -> dict:
     }
 
 
-def _log_trial(path: Path, n_trees: int, season: str, half_life: float) -> None:
-    import datetime
+def _log_trial(path: Path, n_trees: int, what: str, half_life: float, val_log_loss: float | None) -> None:
+    import datetime, math
+    ll = None if val_log_loss is None or not math.isfinite(val_log_loss) else round(val_log_loss, 6)
     entry = {"time": datetime.datetime.utcnow().isoformat() + "Z",
              "part": 2, "model_id": MODEL_ID, "model_version": MODEL_VERSION,
-             "what_changed": f"season={season} n_trees={n_trees} half_life={half_life}d",
-             "val_log_loss": None}
+             "what_changed": f"{what} n_trees={n_trees} half_life={half_life}d",
+             "val_log_loss": ll}
     with open(path, "a") as f:
         f.write(json.dumps(entry) + "\n")
