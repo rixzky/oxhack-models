@@ -15,6 +15,7 @@ GOLDEN_TABLES = Path("contract/golden/tables")
 GOLDEN_JSON = Path("contract/golden/artifacts_json")
 
 ALL_MODELS = ["market", "elo", "dixon_coles", "marketnet", "lgbm"]
+ML_MODELS = {"marketnet", "lgbm"}
 
 
 def _load_inputs(golden: bool):
@@ -34,7 +35,6 @@ def _load_inputs(golden: bool):
 
 
 def _fix_timestamps(df: pd.DataFrame) -> pd.DataFrame:
-    """Ensure all *_utc columns are tz-aware UTC (validator requirement)."""
     for col in ["decision_time_utc", "feature_cutoff_utc", "training_cutoff_utc"]:
         if col in df.columns:
             s = pd.to_datetime(df[col], utc=True)
@@ -43,7 +43,6 @@ def _fix_timestamps(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _fix_nullable_floats(df: pd.DataFrame) -> pd.DataFrame:
-    """xg_home / xg_away are float? — keep as float64 with NaN."""
     for col in ["xg_home", "xg_away"]:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce").astype("float64")
@@ -66,38 +65,95 @@ def main() -> None:
 
     matches, ref_pre, outcomes, splits_by_season = _load_inputs(args.golden)
 
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    trials_path = ARTIFACTS_DIR / "trials_log.jsonl"
+
     all_preds: list[pd.DataFrame] = []
+    all_explanations: list[pd.DataFrame] = []
+    all_importances: list[dict] = []
+    feat_table = None   # built once and shared by ML models
 
     for name in model_names:
         print(f"  running model: {name}")
+
+        if name in ML_MODELS and feat_table is None:
+            print("    building feature table...")
+            from modelling import features as feat_mod
+            matches_with_split = matches.copy()
+            matches_with_split["split"] = matches_with_split["season"].map(splits_by_season)
+            dc_preds = next(
+                (p for p in all_preds if p["model_id"].iloc[0] == "dixon_coles"),
+                None,
+            )
+            # also check existing artifacts
+            if dc_preds is None:
+                ap = ARTIFACTS_DIR / "predictions.parquet"
+                if ap.exists():
+                    existing = read_table(ap, "predictions")
+                    dc_sub = existing[existing["model_id"] == "dixon_coles"]
+                    if len(dc_sub) > 0:
+                        dc_preds = dc_sub
+            feat_table = feat_mod.build(matches_with_split, ref_pre, outcomes, dc_preds)
+            feat_table.to_parquet(ARTIFACTS_DIR / "x_features.parquet", index=False)
+            print(f"    feature table: {len(feat_table)} rows x {len(feat_mod.FEATURE_COLS)} features")
+
         if name == "market":
             from modelling import market
             preds = market.predict_all(matches, ref_pre, splits_by_season, args.include_holdout)
+            expl = pd.DataFrame()
+            imp = {}
         elif name == "elo":
             from modelling import elo
             preds = elo.predict_all(matches, outcomes, splits_by_season, args.include_holdout)
+            expl = pd.DataFrame()
+            imp = {}
         elif name == "dixon_coles":
             from modelling import dixon_coles
             preds = dixon_coles.predict_all(matches, outcomes, splits_by_season, args.include_holdout)
+            expl = pd.DataFrame()
+            imp = {}
         elif name == "marketnet":
             from modelling import marketnet
-            preds = marketnet.predict_all(matches, ref_pre, outcomes, splits_by_season, args.include_holdout)
+            preds, expl, imp = marketnet.predict_all(
+                matches, ref_pre, outcomes, splits_by_season,
+                args.include_holdout, feat_table=feat_table, trials_path=trials_path,
+            )
         elif name == "lgbm":
             from modelling import lgbm
-            preds = lgbm.predict_all(matches, ref_pre, outcomes, splits_by_season, args.include_holdout)
+            preds, expl, imp = lgbm.predict_all(
+                matches, ref_pre, outcomes, splits_by_season,
+                args.include_holdout, feat_table=feat_table, trials_path=trials_path,
+            )
         else:
             raise ValueError(name)
 
         preds = _fix_timestamps(preds)
         preds = _fix_nullable_floats(preds)
         all_preds.append(preds)
+        if len(expl) > 0:
+            all_explanations.append(expl)
+        if imp:
+            all_importances.append(imp)
 
     predictions = pd.concat(all_preds, ignore_index=True)
-
-    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     out_path = ARTIFACTS_DIR / "predictions.parquet"
     write_table(predictions, out_path, "predictions")
     print(f"Wrote {len(predictions)} rows -> {out_path}")
+
+    if all_explanations:
+        explanations = pd.concat(all_explanations, ignore_index=True)
+        write_table(explanations, ARTIFACTS_DIR / "prediction_explanations.parquet",
+                    "prediction_explanations")
+        print(f"Wrote {len(explanations)} explanation rows")
+
+    if all_importances:
+        manifest_path = (GOLDEN_JSON / "manifest.json") if args.golden else (ARTIFACTS_DIR / "manifest.json")
+        dataset_mode = "SYNTHETIC"
+        if manifest_path.exists():
+            dataset_mode = json.loads(manifest_path.read_text()).get("dataset_mode", "SYNTHETIC")
+        fi_out = {"dataset_mode": dataset_mode, "rows": all_importances}
+        (ARTIFACTS_DIR / "feature_importance.json").write_text(json.dumps(fi_out, indent=2))
+        print(f"Wrote feature_importance.json ({len(all_importances)} models)")
 
 
 if __name__ == "__main__":
