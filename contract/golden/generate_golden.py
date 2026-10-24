@@ -79,8 +79,8 @@ for league, teams in LEAGUE_TEAMS.items():
                                 feature_cutoff_utc=S.feature_cutoff(ko)))
             res = "H" if gh > ga else ("D" if gh == ga else "A")
             outcomes.append(dict(match_id=mid, home_goals=gh, away_goals=ga, result=res))
-            pre_obs = ko.floor("D") - timedelta(days=1) + timedelta(hours=14)  # "Friday afternoon"
-            for bk, margin, noise in (("PS", 0.025, 0.06), ("B365", 0.05, 0.07)):
+            pre_obs = ko.floor("D") - timedelta(days=1) + timedelta(hours=18)  # LATEST plausible capture (window end)
+            for bk, margin, noise in (("B365", 0.05, 0.07), ("PS", 0.025, 0.06), ("BW", 0.06, 0.08), ("WH", 0.06, 0.08)):
                 for snap, obs, nz in (("PRE_CLOSING", pre_obs, noise), ("CLOSING", ko, noise / 2)):
                     o = quote_from(p, margin, nz)
                     qid += 1
@@ -112,7 +112,7 @@ for c in ("observed_at_utc",):
 # ------------------------------------------------------------ market probs (reference rule)
 rows = []
 for (mid, snap), g in quotes[quotes.is_valid].groupby(["match_id", "snapshot"]):
-    ref_bk = "PS" if (g.bookmaker == "PS").any() else "B365"
+    ref_bk = S.REFERENCE_BOOKMAKER
     for _, r in g.iterrows():
         q, ov = M.implied_probs([r.odds_home, r.odds_draw, r.odds_away])
         rows.append(dict(match_id=mid, bookmaker=r.bookmaker, snapshot=snap,
@@ -121,7 +121,7 @@ for (mid, snap), g in quotes[quotes.is_valid].groupby(["match_id", "snapshot"]):
 market = pd.DataFrame(rows)
 
 # ------------------------------------------------------------ efficiency map
-mo = market[market.is_reference].merge(outcomes, on="match_id").merge(matches[["match_id", "league", "season"]], on="match_id")
+mo = market[~market.bookmaker.isin(S.AGGREGATE_BOOKMAKERS)].merge(outcomes, on="match_id").merge(matches[["match_id", "league", "season"]], on="match_id")
 eff = []
 for (lg, se, sn, bk), g in mo.groupby(["league", "season", "snapshot", "bookmaker"]):
     P = g[["q_home", "q_draw", "q_away"]].to_numpy()
@@ -214,7 +214,8 @@ for (mid_, sp), g in po.groupby(["model_id", "split"]):
 
 
 # ------------------------------------------------------------ test vectors
-from contract.decisions import decide_match, NAIVE_POLICY, DEFAULT_POLICY  # noqa: E402
+from contract.decisions import (decide_match, NAIVE_POLICY, DEFAULT_POLICY, BEST_PRICE_POLICY,  # noqa: E402
+                                 POLICIES, best_price_quote, reference_quote)
 
 KO = pd.Timestamp("2025-01-04T15:00:00Z")
 OBS = pd.Timestamp("2025-01-03T14:00:00Z")
@@ -230,7 +231,7 @@ def summary(d):
     return {"action": d["action"], "selection": d["selection"], "reason_code": d["reason_code"],
             "reason_codes_all": d["reason_codes_all"], "best_outcome": d["best_outcome"],
             "ev_raw": r(d["ev_raw"]), "ev_stressed": r(d["ev_stressed"]),
-            "proposed_stake": r(d["proposed_stake"])}
+            "proposed_stake": r(d["proposed_stake"]), "bookmaker": d["bookmaker"]}
 
 
 base_pol = {"min_ev": 0.02, "prob_stress_delta": 0.02, "price_haircut": 0.0}
@@ -246,7 +247,32 @@ dec_cases = [
     ([0.30, 0.28, 0.42], None, base_pol),
     ([0.30, 0.28, 0.42], qd([3.10, 3.50, 2.80], obs=KO - pd.Timedelta(hours=200)), base_pol),
     ([0.30, 0.28, 0.42], qd([3.10, 3.50, 2.80]), {**base_pol, "staking_mode": "QUARTER_KELLY"}),
+    ([0.30, 0.28, 0.42], qd([3.10, 3.50, 2.80], obs=KO), base_pol),  # captured at kickoff -> STALE_QUOTE
+    ([0.30, 0.28, 0.42], {**qd([3.20, 3.50, 2.90]), "bookmakers": ["BW", "B365", "WH"],
+                          "ref_odds": [3.10, 3.50, 2.80]}, base_pol),  # best-price quote, Bet365 benchmark
 ]
+
+# best_price_quote vectors (one match, PRE_CLOSING quotes from several bookmakers)
+def bq(qid, bk, odds, valid=True, outlier=False, prec="WINDOW"):
+    return {"quote_id": qid, "bookmaker": bk, "odds": odds, "is_valid": valid, "is_outlier": outlier,
+            "timestamp_precision": prec, "observed_at_utc": OBS}
+
+
+best_cases = [
+    {"season": "2024-25", "quotes": [bq("q1", "B365", [2.10, 3.40, 3.60]), bq("q2", "PS", [2.15, 3.45, 3.70]),
+                                     bq("q3", "WH", [2.05, 3.60, 3.50]), bq("q4", "MAX", [2.40, 3.80, 4.00])]},
+    {"season": "2025-26", "quotes": [bq("q1", "B365", [2.10, 3.40, 3.60]), bq("q2", "PS", [2.15, 3.45, 3.70]),
+                                     bq("q3", "WH", [2.05, 3.60, 3.50])]},
+    {"season": "2024-25", "quotes": [bq("q1", "B365", [2.10, 3.40, 3.60]), bq("q5", "BW", [3.50, 3.40, 2.00]),
+                                     bq("q6", "VC", [2.12, 3.42, 3.66], outlier=True)]},
+    {"season": "2024-25", "quotes": [bq("q1", "B365", [2.10, 3.40, 3.60], valid=False), bq("q2", "PS", [2.15, 3.45, 3.70])]},
+]
+for c in best_cases:
+    b = best_price_quote(c["quotes"], c["season"])
+    c["expected"] = None if b is None else {"odds": b["odds"], "bookmakers": b["bookmakers"], "ref_odds": b["ref_odds"],
+                                            "timestamp_precision": b["timestamp_precision"]}
+    for q in c["quotes"]:
+        q["observed_at_utc"] = OBS.isoformat().replace("+00:00", "Z")
 
 
 def jsonable_quote(q):
@@ -276,6 +302,7 @@ vectors = {
     "decision": [{"probs": p, "quote": jsonable_quote(q), "kickoff_utc": KO.isoformat().replace("+00:00", "Z"),
                   "policy": pol, "expected": summary(decide_match(p, q, KO, pol))}
                  for p, q, pol in dec_cases],
+    "best_price": best_cases,
     "bankroll": {
         "description": "Flat staking, one batch of 25 accepted bets, bankroll 1000, nothing open before. "
                        "Stake 1% of INITIAL bankroll = 10 each. Total open exposure cap 20% = 200, so bets are "
@@ -295,17 +322,27 @@ vectors = {
 # ------------------------------------------------------------ golden decisions ledger (Part 1 output shape)
 # GOLDEN SKETCH of CONTRACT 6.3 so Parts 2 and 3 have a ledger to read. Part 1 owns the real engine.
 mo_all = matches.merge(outcomes, on="match_id")
-ref_q = quotes[quotes.is_valid & (quotes.snapshot == "PRE_CLOSING")]
-ref_q = ref_q.sort_values("bookmaker", key=lambda s: s.map({"PS": 0, "B365": 1})).drop_duplicates("match_id")
-unknown_ref = quotes[(quotes.snapshot == "PRE_CLOSING")].sort_values(
-    "bookmaker", key=lambda s: s.map({"PS": 0, "B365": 1})).drop_duplicates("match_id")
 close_ref = market[market.is_reference & (market.snapshot == "CLOSING")].set_index("match_id")
-quote_by_match = unknown_ref.set_index("match_id")
+pre_quotes = {}
+for r in quotes[quotes.snapshot == "PRE_CLOSING"].itertuples():
+    pre_quotes.setdefault(r.match_id, []).append({
+        "quote_id": r.quote_id, "bookmaker": r.bookmaker, "odds": [r.odds_home, r.odds_draw, r.odds_away],
+        "is_valid": bool(r.is_valid), "is_outlier": False, "timestamp_precision": r.timestamp_precision,
+        "observed_at_utc": None if pd.isna(r.observed_at_utc) else r.observed_at_utc})
+
+
+def exec_quote(match_id, season, pol):
+    qs = pre_quotes.get(match_id, [])
+    if pol["price_source"] == "BEST_AVAILABLE":
+        return best_price_quote(qs, season, pol["best_price_max_prob_gap"]) or reference_quote(qs)
+    return reference_quote(qs)
+
+
 pred_by = preds.set_index(["match_id", "model_id"])
 
 ledger = []
 for model_id in ("elo", "lgbm"):
-    for policy_id, pol in (("naive", NAIVE_POLICY), ("controlled", DEFAULT_POLICY)):
+    for policy_id, pol in POLICIES.items():
         settled, open_bets = pol["initial_bankroll"], []
         cfg_hash = hashlib.sha256(json.dumps({**pol, "model": model_id}, sort_keys=True).encode()).hexdigest()[:12]
         scored = mo_all[mo_all.season.map(SPLIT_OF) != "warmup"].sort_values(["feature_cutoff_utc", "match_id"])
@@ -322,11 +359,7 @@ for model_id in ("elo", "lgbm"):
             available = settled - open_stake
             rows = []
             for r in batch.itertuples():
-                qrow = quote_by_match.loc[r.match_id] if r.match_id in quote_by_match.index else None
-                qdict = None if qrow is None else {
-                    "quote_id": qrow.quote_id, "odds": [qrow.odds_home, qrow.odds_draw, qrow.odds_away],
-                    "is_valid": bool(qrow.is_valid), "timestamp_precision": qrow.timestamp_precision,
-                    "observed_at_utc": None if pd.isna(qrow.observed_at_utc) else qrow.observed_at_utc}
+                qdict = exec_quote(r.match_id, r.season, pol)
                 pr = pred_by.loc[(r.match_id, model_id)] if (r.match_id, model_id) in pred_by.index else None
                 probs = None if pr is None else [pr.p_home, pr.p_draw, pr.p_away]
                 d = decide_match(probs, qdict, r.kickoff_utc, pol, available_bankroll=available)
@@ -353,6 +386,7 @@ for model_id in ("elo", "lgbm"):
                     match_id=r.match_id, model_id=model_id, split=SPLIT_OF[r.season],
                     decision_time_utc=r.feature_cutoff_utc, batch_key=r.matchweek_key,
                     quote_id=d["quote_id"], action=action, selection=d["selection"] if action == "BET" else None,
+                    bookmaker=d["bookmaker"] if action == "BET" else None,
                     p_model=d["p_model"], p_stressed=d["p_stressed"], odds_offered=d["odds_offered"],
                     odds_adjusted=d["odds_adjusted"], ev_raw=d["ev_raw"], ev_stressed=d["ev_stressed"],
                     stake=float(stake), reason_code=code, reason_codes_all="|".join(codes),
@@ -391,8 +425,9 @@ def policy_summary(g, label):
             "bootstrap_ci_95": {"roi": ci}}
 
 
-labels = {"naive": "EV > 0 at offered odds, no checks, flat stakes",
-          "controlled": "Threshold + stress + data checks + exposure caps"}
+labels = {"naive": "EV > 0 at Bet365 odds, no checks, flat stakes",
+          "controlled": "Bet365 prices; threshold + stress + data checks + exposure caps",
+          "controlled_best_price": "Best price across bookmakers; same checks and caps"}
 pm_rows = []
 for (model_id, split), g in ledger.groupby(["model_id", "split"]):
     pols, curve = [], []
@@ -461,10 +496,8 @@ holdout_locked = {"dataset_mode": "SYNTHETIC", "contract_version": S.CONTRACT_VE
 iso = lambda t: None if t is None or pd.isna(t) else pd.Timestamp(t).isoformat().replace("+00:00", "Z")
 ex = mo_all[mo_all.season == "2024-25"].iloc[40]
 mid = ex.match_id
-qrow = quote_by_match.loc[mid]
-qdict = {"quote_id": qrow.quote_id, "odds": [qrow.odds_home, qrow.odds_draw, qrow.odds_away],
-         "is_valid": bool(qrow.is_valid), "timestamp_precision": qrow.timestamp_precision,
-         "observed_at_utc": None if pd.isna(qrow.observed_at_utc) else qrow.observed_at_utc}
+qrow = quotes[(quotes.match_id == mid) & (quotes.snapshot == "PRE_CLOSING") & (quotes.bookmaker == S.REFERENCE_BOOKMAKER)].iloc[0]
+qdict = reference_quote(pre_quotes[mid])
 pr = pred_by.loc[(mid, "lgbm")]
 probs = [pr.p_home, pr.p_draw, pr.p_away]
 d = decide_match(probs, qdict, ex.kickoff_utc, DEFAULT_POLICY)
@@ -484,11 +517,12 @@ replay = {
     "information_cutoff_utc": iso(ex.feature_cutoff_utc),
     "offered_quote": {"quote_id": qrow.quote_id, "bookmaker": qrow.bookmaker, "snapshot": "PRE_CLOSING",
                       "observed_at_utc": iso(qrow.observed_at_utc), "timestamp_precision": qrow.timestamp_precision,
-                      "source": qrow.source, "odds": qdict["odds"]},
+                      "source": qrow.source, "odds": qdict["odds"], "bookmakers": qdict["bookmakers"]},
+    "price_source": "REFERENCE", "policy_id": "controlled",
     "market_probs": [r6(x) for x in M.implied_probs(qdict["odds"])[0]],
     "model": {"model_id": "lgbm", "model_version": "golden-stub-1", "probs": [r6(x) for x in probs]},
     "per_outcome": [{k: (r6(v) if isinstance(v, float) else v) for k, v in row.items()} for row in d["per_outcome"]],
-    "decision": {"action": d["action"], "selection": d["selection"], "stake": d["proposed_stake"],
+    "decision": {"action": d["action"], "selection": d["selection"], "stake": d["proposed_stake"], "bookmaker": d["bookmaker"],
                  "reason_code": d["reason_code"], "reason_codes_all": d["reason_codes_all"],
                  "explanation": d["explanation"]},
     "top_features": [{"outcome": e.outcome, "rank": int(e.rank), "feature": e.feature,

@@ -1,7 +1,7 @@
 {
   "dataset_mode": "SYNTHETIC",
-  "contract_version": "1.1.0",
-  "config_hash": "0881e4052cac",
+  "contract_version": "1.2.0",
+  "config_hash": "4b27295c3f96",
   "locked_at_utc": null,
   "model_id": "lgbm",
   "model_version": "golden-stub-1",
@@ -11,216 +11,237 @@
     {
       "model_id": "elo",
       "split": "holdout",
-      "n": 146,
-      "log_loss": 0.9728319997080632,
-      "brier_sum3": 0.5720490228891368,
+      "n": 145,
+      "log_loss": 0.8938501728502455,
+      "brier_sum3": 0.5261033106874594,
       "calibration_bins": [
         {
           "bin_lo": 0.0,
           "bin_hi": 0.1,
-          "n": 24,
-          "mean_pred": 0.0751407163012025,
-          "obs_freq": 0.16666666666666666
+          "n": 66,
+          "mean_pred": 0.055705939115307475,
+          "obs_freq": 0.06060606060606061
         },
         {
           "bin_lo": 0.1,
           "bin_hi": 0.2,
-          "n": 85,
-          "mean_pred": 0.15839581541684383,
-          "obs_freq": 0.1411764705882353
+          "n": 98,
+          "mean_pred": 0.15678163980254212,
+          "obs_freq": 0.19387755102040816
         },
         {
           "bin_lo": 0.2,
           "bin_hi": 0.3,
-          "n": 144,
-          "mean_pred": 0.24137442556582706,
-          "obs_freq": 0.2569444444444444
+          "n": 95,
+          "mean_pred": 0.23879536229834997,
+          "obs_freq": 0.24210526315789474
         },
         {
           "bin_lo": 0.3,
           "bin_hi": 0.4,
-          "n": 51,
-          "mean_pred": 0.344824988395644,
-          "obs_freq": 0.35294117647058826
+          "n": 44,
+          "mean_pred": 0.34685218997144673,
+          "obs_freq": 0.4772727272727273
         },
         {
           "bin_lo": 0.4,
           "bin_hi": 0.5,
-          "n": 40,
-          "mean_pred": 0.44536082457973236,
-          "obs_freq": 0.475
+          "n": 22,
+          "mean_pred": 0.44559742820921583,
+          "obs_freq": 0.3181818181818182
         },
         {
           "bin_lo": 0.5,
           "bin_hi": 0.6,
-          "n": 36,
-          "mean_pred": 0.542636532875528,
-          "obs_freq": 0.3888888888888889
+          "n": 26,
+          "mean_pred": 0.5502046264164115,
+          "obs_freq": 0.38461538461538464
         },
         {
           "bin_lo": 0.6,
           "bin_hi": 0.7,
-          "n": 35,
-          "mean_pred": 0.653130501798359,
-          "obs_freq": 0.6857142857142857
+          "n": 32,
+          "mean_pred": 0.6499621066394987,
+          "obs_freq": 0.59375
         },
         {
           "bin_lo": 0.7,
           "bin_hi": 0.8,
-          "n": 14,
-          "mean_pred": 0.7588498172761742,
-          "obs_freq": 0.7142857142857143
+          "n": 20,
+          "mean_pred": 0.7511434566185323,
+          "obs_freq": 0.7
         },
         {
           "bin_lo": 0.8,
           "bin_hi": 0.9,
-          "n": 9,
-          "mean_pred": 0.8395748485739065,
-          "obs_freq": 0.8888888888888888
+          "n": 18,
+          "mean_pred": 0.8452121010025072,
+          "obs_freq": 0.7777777777777778
+        },
+        {
+          "bin_lo": 0.9,
+          "bin_hi": 1.0,
+          "n": 14,
+          "mean_pred": 0.9191295335960353,
+          "obs_freq": 1.0
         }
       ]
     },
     {
       "model_id": "lgbm",
       "split": "holdout",
-      "n": 146,
-      "log_loss": 0.9835159701145326,
-      "brier_sum3": 0.5794018944678028,
+      "n": 145,
+      "log_loss": 0.880714575512607,
+      "brier_sum3": 0.5175846887445082,
       "calibration_bins": [
         {
           "bin_lo": 0.0,
           "bin_hi": 0.1,
-          "n": 22,
-          "mean_pred": 0.07344642889478338,
-          "obs_freq": 0.13636363636363635
+          "n": 71,
+          "mean_pred": 0.05719354712780335,
+          "obs_freq": 0.056338028169014086
         },
         {
           "bin_lo": 0.1,
           "bin_hi": 0.2,
           "n": 89,
-          "mean_pred": 0.15781789800437998,
-          "obs_freq": 0.19101123595505617
+          "mean_pred": 0.1556684138761009,
+          "obs_freq": 0.1797752808988764
         },
         {
           "bin_lo": 0.2,
           "bin_hi": 0.3,
-          "n": 137,
-          "mean_pred": 0.2397939715495384,
-          "obs_freq": 0.23357664233576642
+          "n": 101,
+          "mean_pred": 0.2386423587386789,
+          "obs_freq": 0.2871287128712871
         },
         {
           "bin_lo": 0.3,
           "bin_hi": 0.4,
-          "n": 58,
-          "mean_pred": 0.3489892985200416,
-          "obs_freq": 0.3620689655172414
+          "n": 41,
+          "mean_pred": 0.3523512071006744,
+          "obs_freq": 0.3902439024390244
         },
         {
           "bin_lo": 0.4,
           "bin_hi": 0.5,
-          "n": 42,
-          "mean_pred": 0.4447202698934908,
-          "obs_freq": 0.4523809523809524
+          "n": 24,
+          "mean_pred": 0.4492569318892135,
+          "obs_freq": 0.25
         },
         {
           "bin_lo": 0.5,
           "bin_hi": 0.6,
-          "n": 36,
-          "mean_pred": 0.5562227510053256,
-          "obs_freq": 0.4722222222222222
+          "n": 29,
+          "mean_pred": 0.5510911517714405,
+          "obs_freq": 0.5172413793103449
         },
         {
           "bin_lo": 0.6,
           "bin_hi": 0.7,
-          "n": 30,
-          "mean_pred": 0.6541271574356223,
-          "obs_freq": 0.6333333333333333
+          "n": 26,
+          "mean_pred": 0.6519554672891188,
+          "obs_freq": 0.6538461538461539
         },
         {
           "bin_lo": 0.7,
           "bin_hi": 0.8,
-          "n": 16,
-          "mean_pred": 0.7585680436352058,
-          "obs_freq": 0.6875
+          "n": 21,
+          "mean_pred": 0.7511178111644907,
+          "obs_freq": 0.6190476190476191
         },
         {
           "bin_lo": 0.8,
           "bin_hi": 0.9,
-          "n": 8,
-          "mean_pred": 0.8477573040656837,
-          "obs_freq": 0.875
+          "n": 19,
+          "mean_pred": 0.8505692005460302,
+          "obs_freq": 0.7894736842105263
+        },
+        {
+          "bin_lo": 0.9,
+          "bin_hi": 1.0,
+          "n": 14,
+          "mean_pred": 0.9204679167257066,
+          "obs_freq": 1.0
         }
       ]
     },
     {
       "model_id": "market",
       "split": "holdout",
-      "n": 146,
-      "log_loss": 0.9718339347364484,
-      "brier_sum3": 0.5713815811036733,
+      "n": 145,
+      "log_loss": 0.8861776717448053,
+      "brier_sum3": 0.5211590937795744,
       "calibration_bins": [
         {
           "bin_lo": 0.0,
           "bin_hi": 0.1,
-          "n": 20,
-          "mean_pred": 0.07406496521736337,
-          "obs_freq": 0.15
+          "n": 67,
+          "mean_pred": 0.05616027192576863,
+          "obs_freq": 0.05970149253731343
         },
         {
           "bin_lo": 0.1,
           "bin_hi": 0.2,
-          "n": 72,
-          "mean_pred": 0.15535571702209433,
-          "obs_freq": 0.1388888888888889
+          "n": 82,
+          "mean_pred": 0.1513850677905053,
+          "obs_freq": 0.2073170731707317
         },
         {
           "bin_lo": 0.2,
           "bin_hi": 0.3,
-          "n": 157,
-          "mean_pred": 0.2397915204999066,
-          "obs_freq": 0.2484076433121019
+          "n": 115,
+          "mean_pred": 0.24315952088303244,
+          "obs_freq": 0.24347826086956523
         },
         {
           "bin_lo": 0.3,
           "bin_hi": 0.4,
-          "n": 60,
-          "mean_pred": 0.34938781974867683,
-          "obs_freq": 0.3333333333333333
+          "n": 39,
+          "mean_pred": 0.3489006260113997,
+          "obs_freq": 0.46153846153846156
         },
         {
           "bin_lo": 0.4,
           "bin_hi": 0.5,
-          "n": 40,
-          "mean_pred": 0.4445653533156019,
-          "obs_freq": 0.5
+          "n": 28,
+          "mean_pred": 0.4547130808735103,
+          "obs_freq": 0.2857142857142857
         },
         {
           "bin_lo": 0.5,
           "bin_hi": 0.6,
-          "n": 36,
-          "mean_pred": 0.5486524661452807,
-          "obs_freq": 0.4722222222222222
+          "n": 24,
+          "mean_pred": 0.5488130485319042,
+          "obs_freq": 0.4583333333333333
         },
         {
           "bin_lo": 0.6,
           "bin_hi": 0.7,
-          "n": 30,
-          "mean_pred": 0.6414192431451717,
-          "obs_freq": 0.6333333333333333
+          "n": 29,
+          "mean_pred": 0.6524984787698124,
+          "obs_freq": 0.6206896551724138
         },
         {
           "bin_lo": 0.7,
           "bin_hi": 0.8,
-          "n": 17,
-          "mean_pred": 0.7551644980383261,
-          "obs_freq": 0.7647058823529411
+          "n": 19,
+          "mean_pred": 0.7579232388448377,
+          "obs_freq": 0.631578947368421
         },
         {
           "bin_lo": 0.8,
           "bin_hi": 0.9,
-          "n": 6,
-          "mean_pred": 0.8513457486325177,
-          "obs_freq": 0.8333333333333334
+          "n": 20,
+          "mean_pred": 0.8492615684363027,
+          "obs_freq": 0.85
+        },
+        {
+          "bin_lo": 0.9,
+          "bin_hi": 1.0,
+          "n": 12,
+          "mean_pred": 0.9201257238193522,
+          "obs_freq": 1.0
         }
       ]
     }
@@ -228,398 +249,545 @@
   "policies": [
     {
       "policy_id": "controlled",
-      "label": "Threshold + stress + data checks + exposure caps",
+      "label": "Bet365 prices; threshold + stress + data checks + exposure caps",
       "n_decisions": 146,
-      "n_bets": 24,
-      "n_abstain": 122,
-      "turnover": 240.0,
-      "profit": -136.4,
-      "roi": -0.5683333333333334,
-      "max_drawdown": 156.10000000000002,
-      "mean_clv": -0.02933851539424028,
-      "sharpe_per_matchweek": -0.7304064534602441,
+      "n_bets": 8,
+      "n_abstain": 138,
+      "turnover": 80.0,
+      "profit": 38.400000000000006,
+      "roi": 0.4800000000000001,
+      "max_drawdown": 20.0,
+      "mean_clv": -0.01432860473999531,
+      "sharpe_per_matchweek": 0.37361803727610243,
       "deflated_sharpe": null,
       "reason_counts": {
-        "FAILS_STRESS": 68,
-        "EV_BELOW_THRESHOLD": 53,
-        "ACCEPTED": 24,
-        "STALE_QUOTE": 1
+        "EV_BELOW_THRESHOLD": 94,
+        "FAILS_STRESS": 43,
+        "ACCEPTED": 8,
+        "MISSING_PREDICTION": 1
       },
       "bootstrap_ci_95": {
         "roi": [
-          -0.8675025,
-          -0.18598043478260884
+          -0.37374999999999997,
+          1.28128125
+        ]
+      }
+    },
+    {
+      "policy_id": "controlled_best_price",
+      "label": "Best price across bookmakers; same checks and caps",
+      "n_decisions": 146,
+      "n_bets": 45,
+      "n_abstain": 101,
+      "turnover": 450.0,
+      "profit": 190.00000000000003,
+      "roi": 0.4222222222222223,
+      "max_drawdown": 80.20000000000005,
+      "mean_clv": 0.02973272740507583,
+      "sharpe_per_matchweek": 0.2786038100565071,
+      "deflated_sharpe": null,
+      "reason_counts": {
+        "FAILS_STRESS": 61,
+        "ACCEPTED": 45,
+        "EV_BELOW_THRESHOLD": 38,
+        "STALE_QUOTE": 1,
+        "MISSING_PREDICTION": 1
+      },
+      "bootstrap_ci_95": {
+        "roi": [
+          -0.1075958333333333,
+          1.0329334795321636
         ]
       }
     },
     {
       "policy_id": "naive",
-      "label": "EV > 0 at offered odds, no checks, flat stakes",
+      "label": "EV > 0 at Bet365 odds, no checks, flat stakes",
       "n_decisions": 146,
-      "n_bets": 121,
-      "n_abstain": 25,
-      "turnover": 1210.0,
-      "profit": -108.79999999999998,
-      "roi": -0.0899173553719008,
-      "max_drawdown": 173.79999999999995,
-      "mean_clv": -0.025976014514372727,
-      "sharpe_per_matchweek": -0.13894522817685487,
+      "n_bets": 82,
+      "n_abstain": 64,
+      "turnover": 820.0,
+      "profit": 168.09999999999997,
+      "roi": 0.20499999999999996,
+      "max_drawdown": 63.299999999999955,
+      "mean_clv": -0.04101354968992342,
+      "sharpe_per_matchweek": 0.22220522565592835,
       "deflated_sharpe": null,
       "reason_counts": {
-        "ACCEPTED": 121,
-        "EV_BELOW_THRESHOLD": 25
+        "ACCEPTED": 82,
+        "EV_BELOW_THRESHOLD": 63,
+        "MISSING_PREDICTION": 1
       },
       "bootstrap_ci_95": {
         "roi": [
-          -0.3079394845585037,
-          0.13953881578947347
+          -0.08501424050632912,
+          0.5194769385490358
         ]
       }
     }
   ],
   "equity_curve": [
     {
-      "batch_key": "E0_2025-W33",
-      "time_utc": "2025-08-12T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 990.0,
-      "drawdown": 10.0
-    },
-    {
-      "batch_key": "E0_2025-W34",
-      "time_utc": "2025-08-19T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 970.0,
-      "drawdown": 30.0
-    },
-    {
       "batch_key": "E0_2025-W35",
       "time_utc": "2025-08-26T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 960.0,
-      "drawdown": 40.0
+      "bankroll": 1010.6,
+      "drawdown": 0.0
     },
     {
-      "batch_key": "D1_2025-W36",
-      "time_utc": "2025-09-02T00:00:00Z",
+      "batch_key": "D1_2025-W35",
+      "time_utc": "2025-08-27T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 940.0,
-      "drawdown": 60.0
-    },
-    {
-      "batch_key": "E0_2025-W37",
-      "time_utc": "2025-09-09T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 930.0,
-      "drawdown": 70.0
+      "bankroll": 1018.4,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W38",
       "time_utc": "2025-09-16T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 910.0,
-      "drawdown": 90.0
+      "bankroll": 1036.9,
+      "drawdown": 0.0
     },
     {
-      "batch_key": "E0_2025-W40",
-      "time_utc": "2025-10-01T00:00:00Z",
+      "batch_key": "D1_2025-W40",
+      "time_utc": "2025-09-30T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 900.0,
-      "drawdown": 100.0
+      "bankroll": 1026.9,
+      "drawdown": 10.0
+    },
+    {
+      "batch_key": "D1_2025-W41",
+      "time_utc": "2025-10-07T00:00:00Z",
+      "policy_id": "controlled",
+      "bankroll": 1046.4,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W42",
-      "time_utc": "2025-10-14T00:00:00Z",
+      "time_utc": "2025-10-15T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 890.0,
-      "drawdown": 110.0
+      "bankroll": 1036.4,
+      "drawdown": 10.0
     },
     {
-      "batch_key": "D1_2025-W43",
+      "batch_key": "E0_2025-W43",
       "time_utc": "2025-10-21T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 891.8,
-      "drawdown": 108.2
-    },
-    {
-      "batch_key": "E0_2025-W44",
-      "time_utc": "2025-10-28T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 881.8,
-      "drawdown": 118.2
+      "bankroll": 1026.4,
+      "drawdown": 20.0
     },
     {
       "batch_key": "E0_2025-W45",
       "time_utc": "2025-11-04T00:00:00Z",
       "policy_id": "controlled",
-      "bankroll": 888.5,
-      "drawdown": 111.5
-    },
-    {
-      "batch_key": "E0_2025-W46",
-      "time_utc": "2025-11-11T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 878.5,
-      "drawdown": 121.5
-    },
-    {
-      "batch_key": "D1_2025-W46",
-      "time_utc": "2025-11-12T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 868.5,
-      "drawdown": 131.5
-    },
-    {
-      "batch_key": "E0_2025-W47",
-      "time_utc": "2025-11-18T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 848.5,
-      "drawdown": 151.5
-    },
-    {
-      "batch_key": "E0_2025-W48",
-      "time_utc": "2025-11-25T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 843.9,
-      "drawdown": 156.1
-    },
-    {
-      "batch_key": "E0_2025-W49",
-      "time_utc": "2025-12-02T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 867.2,
-      "drawdown": 132.8
-    },
-    {
-      "batch_key": "E0_2025-W50",
-      "time_utc": "2025-12-09T00:00:00Z",
-      "policy_id": "controlled",
-      "bankroll": 863.6,
-      "drawdown": 136.4
+      "bankroll": 1038.4,
+      "drawdown": 8.0
     },
     {
       "batch_key": "D1_2025-W33",
       "time_utc": "2025-08-12T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 995.0,
-      "drawdown": 5.0
-    },
-    {
-      "batch_key": "E0_2025-W33",
-      "time_utc": "2025-08-12T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 979.3,
-      "drawdown": 20.7
-    },
-    {
-      "batch_key": "E0_2025-W34",
-      "time_utc": "2025-08-19T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 980.7,
-      "drawdown": 19.3
-    },
-    {
-      "batch_key": "D1_2025-W34",
-      "time_utc": "2025-08-19T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 950.7,
-      "drawdown": 49.3
-    },
-    {
-      "batch_key": "D1_2025-W35",
-      "time_utc": "2025-08-26T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 997.2,
-      "drawdown": 2.8
+      "policy_id": "controlled_best_price",
+      "bankroll": 1041.9,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W35",
       "time_utc": "2025-08-26T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 995.2,
-      "drawdown": 4.8
+      "policy_id": "controlled_best_price",
+      "bankroll": 1055.4,
+      "drawdown": 0.0
     },
     {
-      "batch_key": "D1_2025-W36",
-      "time_utc": "2025-09-02T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 1060.0,
+      "batch_key": "D1_2025-W35",
+      "time_utc": "2025-08-27T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1063.2,
       "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W36",
       "time_utc": "2025-09-02T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 1010.0,
-      "drawdown": 50.0
+      "policy_id": "controlled_best_price",
+      "bankroll": 1120.4,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W37",
       "time_utc": "2025-09-09T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1110.4,
+      "drawdown": 10.0
+    },
+    {
+      "batch_key": "D1_2025-W37",
+      "time_utc": "2025-09-09T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1100.4,
+      "drawdown": 20.0
+    },
+    {
+      "batch_key": "E0_2025-W38",
+      "time_utc": "2025-09-16T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1120.5,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "D1_2025-W38",
+      "time_utc": "2025-09-16T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1186.8,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "E0_2025-W39",
+      "time_utc": "2025-09-23T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1195.1,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "D1_2025-W39",
+      "time_utc": "2025-09-23T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1218.8,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "D1_2025-W40",
+      "time_utc": "2025-09-30T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1198.8,
+      "drawdown": 20.0
+    },
+    {
+      "batch_key": "E0_2025-W40",
+      "time_utc": "2025-09-30T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1168.8,
+      "drawdown": 50.0
+    },
+    {
+      "batch_key": "E0_2025-W41",
+      "time_utc": "2025-10-07T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1158.8,
+      "drawdown": 60.0
+    },
+    {
+      "batch_key": "D1_2025-W41",
+      "time_utc": "2025-10-07T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1168.3,
+      "drawdown": 50.5
+    },
+    {
+      "batch_key": "D1_2025-W42",
+      "time_utc": "2025-10-14T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1168.6,
+      "drawdown": 50.2
+    },
+    {
+      "batch_key": "E0_2025-W42",
+      "time_utc": "2025-10-14T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1138.6,
+      "drawdown": 80.2
+    },
+    {
+      "batch_key": "D1_2025-W43",
+      "time_utc": "2025-10-21T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1160.2,
+      "drawdown": 58.6
+    },
+    {
+      "batch_key": "E0_2025-W43",
+      "time_utc": "2025-10-21T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1150.2,
+      "drawdown": 68.6
+    },
+    {
+      "batch_key": "D1_2025-W44",
+      "time_utc": "2025-10-29T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1168.9,
+      "drawdown": 49.9
+    },
+    {
+      "batch_key": "E0_2025-W45",
+      "time_utc": "2025-11-04T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1170.9,
+      "drawdown": 47.9
+    },
+    {
+      "batch_key": "D1_2025-W45",
+      "time_utc": "2025-11-05T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1160.9,
+      "drawdown": 57.9
+    },
+    {
+      "batch_key": "D1_2025-W46",
+      "time_utc": "2025-11-11T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1195.1,
+      "drawdown": 23.7
+    },
+    {
+      "batch_key": "E0_2025-W46",
+      "time_utc": "2025-11-11T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1204.6,
+      "drawdown": 14.2
+    },
+    {
+      "batch_key": "E0_2025-W47",
+      "time_utc": "2025-11-18T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1240.0,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "E0_2025-W48",
+      "time_utc": "2025-11-25T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1210.0,
+      "drawdown": 30.0
+    },
+    {
+      "batch_key": "E0_2025-W49",
+      "time_utc": "2025-12-02T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1200.0,
+      "drawdown": 40.0
+    },
+    {
+      "batch_key": "E0_2025-W50",
+      "time_utc": "2025-12-10T00:00:00Z",
+      "policy_id": "controlled_best_price",
+      "bankroll": 1190.0,
+      "drawdown": 50.0
+    },
+    {
+      "batch_key": "D1_2025-W33",
+      "time_utc": "2025-08-12T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 1018.0,
-      "drawdown": 42.0
+      "bankroll": 1033.3,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "E0_2025-W33",
+      "time_utc": "2025-08-12T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1072.9,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "D1_2025-W34",
+      "time_utc": "2025-08-19T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1085.5,
+      "drawdown": 0.0
+    },
+    {
+      "batch_key": "E0_2025-W35",
+      "time_utc": "2025-08-26T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1076.1,
+      "drawdown": 9.4
+    },
+    {
+      "batch_key": "D1_2025-W35",
+      "time_utc": "2025-08-26T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1063.9,
+      "drawdown": 21.6
+    },
+    {
+      "batch_key": "D1_2025-W36",
+      "time_utc": "2025-09-02T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1043.9,
+      "drawdown": 41.6
+    },
+    {
+      "batch_key": "E0_2025-W36",
+      "time_utc": "2025-09-02T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1063.4,
+      "drawdown": 22.1
     },
     {
       "batch_key": "D1_2025-W37",
       "time_utc": "2025-09-09T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 1035.4,
-      "drawdown": 24.6
+      "bankroll": 1033.4,
+      "drawdown": 52.1
+    },
+    {
+      "batch_key": "E0_2025-W37",
+      "time_utc": "2025-09-09T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1049.8,
+      "drawdown": 35.7
     },
     {
       "batch_key": "E0_2025-W38",
       "time_utc": "2025-09-16T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 1022.9,
-      "drawdown": 37.1
+      "bankroll": 1077.9,
+      "drawdown": 7.6
     },
     {
       "batch_key": "D1_2025-W38",
       "time_utc": "2025-09-16T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 982.9,
-      "drawdown": 77.1
+      "bankroll": 1123.2,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W39",
       "time_utc": "2025-09-23T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 962.9,
-      "drawdown": 97.1
+      "bankroll": 1110.4,
+      "drawdown": 12.8
     },
     {
       "batch_key": "D1_2025-W39",
       "time_utc": "2025-09-23T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 971.8,
-      "drawdown": 88.2
-    },
-    {
-      "batch_key": "E0_2025-W40",
-      "time_utc": "2025-09-30T00:00:00Z",
-      "policy_id": "naive",
-      "bankroll": 939.4,
-      "drawdown": 120.6
+      "bankroll": 1100.4,
+      "drawdown": 22.8
     },
     {
       "batch_key": "D1_2025-W40",
       "time_utc": "2025-09-30T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 948.3,
-      "drawdown": 111.7
+      "bankroll": 1080.4,
+      "drawdown": 42.8
     },
     {
-      "batch_key": "E0_2025-W41",
-      "time_utc": "2025-10-07T00:00:00Z",
+      "batch_key": "E0_2025-W40",
+      "time_utc": "2025-10-01T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 968.3,
-      "drawdown": 91.7
+      "bankroll": 1060.4,
+      "drawdown": 62.8
     },
     {
       "batch_key": "D1_2025-W41",
       "time_utc": "2025-10-07T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 938.3,
-      "drawdown": 121.7
+      "bankroll": 1059.9,
+      "drawdown": 63.3
     },
     {
-      "batch_key": "D1_2025-W42",
-      "time_utc": "2025-10-14T00:00:00Z",
+      "batch_key": "E0_2025-W41",
+      "time_utc": "2025-10-08T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 942.9,
-      "drawdown": 117.1
+      "bankroll": 1093.3,
+      "drawdown": 29.9
     },
     {
       "batch_key": "E0_2025-W42",
       "time_utc": "2025-10-14T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 910.6,
-      "drawdown": 149.4
+      "bankroll": 1103.3,
+      "drawdown": 19.9
+    },
+    {
+      "batch_key": "D1_2025-W42",
+      "time_utc": "2025-10-14T00:00:00Z",
+      "policy_id": "naive",
+      "bankroll": 1102.3,
+      "drawdown": 20.9
     },
     {
       "batch_key": "D1_2025-W43",
       "time_utc": "2025-10-21T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 892.4,
-      "drawdown": 167.6
+      "bankroll": 1098.6,
+      "drawdown": 24.6
     },
     {
       "batch_key": "E0_2025-W43",
       "time_utc": "2025-10-21T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 886.2,
-      "drawdown": 173.8
+      "bankroll": 1177.6,
+      "drawdown": 0.0
     },
     {
       "batch_key": "D1_2025-W44",
       "time_utc": "2025-10-28T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 903.5,
-      "drawdown": 156.5
+      "bankroll": 1186.8,
+      "drawdown": 0.0
     },
     {
       "batch_key": "E0_2025-W44",
       "time_utc": "2025-10-28T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 900.0,
-      "drawdown": 160.0
+      "bankroll": 1166.8,
+      "drawdown": 20.0
     },
     {
       "batch_key": "D1_2025-W45",
       "time_utc": "2025-11-04T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 921.1,
-      "drawdown": 138.9
+      "bankroll": 1136.8,
+      "drawdown": 50.0
     },
     {
       "batch_key": "E0_2025-W45",
       "time_utc": "2025-11-04T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 942.4,
-      "drawdown": 117.6
+      "bankroll": 1128.8,
+      "drawdown": 58.0
     },
     {
       "batch_key": "D1_2025-W46",
       "time_utc": "2025-11-11T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 941.8,
-      "drawdown": 118.2
+      "bankroll": 1138.4,
+      "drawdown": 48.4
     },
     {
       "batch_key": "E0_2025-W46",
       "time_utc": "2025-11-11T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 947.4,
-      "drawdown": 112.6
+      "bankroll": 1134.2,
+      "drawdown": 52.6
     },
     {
       "batch_key": "E0_2025-W47",
       "time_utc": "2025-11-18T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 917.4,
-      "drawdown": 142.6
+      "bankroll": 1157.2,
+      "drawdown": 29.6
     },
     {
       "batch_key": "E0_2025-W48",
       "time_utc": "2025-11-25T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 902.6,
-      "drawdown": 157.4
+      "bankroll": 1157.6,
+      "drawdown": 29.2
     },
     {
       "batch_key": "E0_2025-W49",
       "time_utc": "2025-12-02T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 895.9,
-      "drawdown": 164.1
+      "bankroll": 1173.7,
+      "drawdown": 13.1
     },
     {
       "batch_key": "E0_2025-W50",
       "time_utc": "2025-12-09T00:00:00Z",
       "policy_id": "naive",
-      "bankroll": 891.2,
-      "drawdown": 168.8
+      "bankroll": 1168.1,
+      "drawdown": 18.7
     }
   ],
   "note": "Golden example only. The real file is written once at the freeze."

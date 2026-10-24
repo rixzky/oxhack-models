@@ -1,4 +1,4 @@
-# INTEGRATION.md (shared by all three repos, contract v1.1.0)
+# INTEGRATION.md (shared by all three repos, contract v1.2.0)
 
 How three separate repos become one working project. Read with `CONTRACT.md`.
 
@@ -34,7 +34,7 @@ All commands run from the repo root. Each reads `ARTIFACTS_DIR` (default `./arti
 | 1 | `python -m data_pipeline.run --leagues E0 --seasons 2005-06:2025-26` | raw CSVs to Part 1 data artifacts |
 | 1 | `python -m data_pipeline.load_tiger` | optional: load artifacts into Tiger Data if `DATABASE_URL` is set |
 | 2 | `python -m modelling.run --models market,elo,dixon_coles,marketnet,lgbm` | `predictions.parquet`, `prediction_explanations.parquet`, `feature_importance.json` |
-| 1 | `python -m decisions.run_backtest --split validation --models market,elo,dixon_coles,marketnet,lgbm` | `decisions.parquet` (naive + controlled) |
+| 1 | `python -m decisions.run_backtest --split validation --models market,elo,dixon_coles,marketnet,lgbm` | `decisions.parquet` (naive, controlled, controlled_best_price) |
 | 2 | `python -m evaluation.run --split validation` | `forecast_metrics.json`, `policy_metrics.json` |
 | 1 | `python -m decisions.freeze --model lgbm --model-version X` | `frozen_config.json` (team present) |
 | 1, 2 | holdout sequence, CONTRACT section 8 | `holdout_locked.json` (Part 2 writes it) |

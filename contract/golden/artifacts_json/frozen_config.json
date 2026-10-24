@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "frozen_at_utc": null,
   "model_id": "lgbm",
   "model_version": "golden-stub-1",
@@ -19,11 +19,13 @@
       "DATE",
       "WINDOW"
     ],
-    "league_gate": false
+    "league_gate": false,
+    "price_source": "REFERENCE",
+    "best_price_max_prob_gap": 0.1
   },
   "chosen_using": [
     "validation"
   ],
   "n_trials_logged": 1,
-  "config_hash": "0881e4052cac"
+  "config_hash": "4b27295c3f96"
 }

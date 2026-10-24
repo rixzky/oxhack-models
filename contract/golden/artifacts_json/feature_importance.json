@@ -9,31 +9,31 @@
       "features": [
         {
           "feature": "dc_logratio_home",
-          "importance": 0.046274112884578
+          "importance": 0.04247702663907957
         },
         {
           "feature": "dc_logratio_away",
-          "importance": 0.03815736499148552
+          "importance": 0.037100867948175076
         },
         {
           "feature": "rest_days_diff",
-          "importance": 0.03377209004434927
+          "importance": 0.03249259327478655
         },
         {
           "feature": "elo_diff",
-          "importance": 0.02527617955982115
+          "importance": 0.02366833918177925
         },
         {
           "feature": "q_draw",
-          "importance": 0.015577336767626116
+          "importance": 0.007140327139705863
         },
         {
           "feature": "fav_log_q",
-          "importance": 0.0024949687517056953
+          "importance": 0.00395861424359327
         },
         {
           "feature": "league_E0",
-          "importance": 0.002467361982687071
+          "importance": 0.0015961427715093911
         }
       ]
     },
@@ -45,31 +45,31 @@
       "features": [
         {
           "feature": "dc_logratio_home",
-          "importance": 0.0189127667641611
+          "importance": 0.01785742593846549
         },
         {
           "feature": "dc_logratio_away",
-          "importance": 0.018653196678231423
+          "importance": 0.01762422877582821
         },
         {
           "feature": "rest_days_diff",
-          "importance": 0.01266194413781737
+          "importance": 0.01653405079417414
         },
         {
           "feature": "elo_diff",
-          "importance": 0.009719383368024356
+          "importance": 0.01627655646745467
         },
         {
           "feature": "q_draw",
-          "importance": 0.008118000364306568
+          "importance": 0.013041343441781149
         },
         {
           "feature": "fav_log_q",
-          "importance": 0.0038901826578168477
+          "importance": 0.009919561410737628
         },
         {
           "feature": "league_E0",
-          "importance": 0.0037687736025806863
+          "importance": 0.003157654920568005
         }
       ]
     }

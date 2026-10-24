@@ -17,7 +17,7 @@ import pandas as pd
 
 from .maths import PROB_SUM_TOL
 
-CONTRACT_VERSION = "1.1.0"
+CONTRACT_VERSION = "1.2.0"
 
 # ---------------------------------------------------------------- enums
 LEAGUES = ["E0", "E1", "SP1", "D1", "I1", "F1", "N1", "P1"]  # football-data codes
@@ -25,14 +25,21 @@ FIRST_SEASON = "2005-06"
 HOLDOUT_SEASON = "2025-26"
 SNAPSHOTS = ["PRE_CLOSING", "CLOSING"]          # never "OPENING"
 PRECISIONS = ["EXACT", "DATE", "WINDOW", "UNKNOWN"]
-BOOKMAKERS = ["PS", "B365", "AVG"]               # PS = Pinnacle, AVG = market average (efficiency map only)
+# Individual bookmakers (football-data column prefixes; Part 1 ingests those present):
+# B365 Bet365, PS Pinnacle, BW Bet&Win, IW Interwetten, WH William Hill, VC VC Bet.
+# MAX / AVG are football-data aggregate columns: efficiency map only, never executable.
+BOOKMAKERS = ["B365", "PS", "BW", "IW", "WH", "VC", "MAX", "AVG"]
+AGGREGATE_BOOKMAKERS = ["MAX", "AVG"]
+REFERENCE_BOOKMAKER = "B365"                     # probability benchmark, all seasons (contract 1.2.0)
+# Bookmakers never used for execution in a given season (provider warning: Pinnacle stale from 2025-07-23).
+EXECUTION_EXCLUDE = {"2025-26": ["PS"]}
 RESULTS = ["H", "D", "A"]
 SPLITS = ["warmup", "train", "calibration", "validation", "holdout"]
 MODEL_IDS = ["market", "elo", "dixon_coles", "marketnet", "lgbm"]
 DATASET_MODES = ["REAL", "SYNTHETIC"]
 ACTIONS = ["BET", "NO_BET"]
 STAKING_MODES = ["FLAT", "QUARTER_KELLY"]
-POLICY_IDS = ["naive", "controlled"]
+POLICY_IDS = ["naive", "controlled", "controlled_best_price"]
 REASON_CODES = [
     "ACCEPTED",
     "EV_BELOW_THRESHOLD",
@@ -51,6 +58,21 @@ REASON_CODES = [
 def slug(name: str) -> str:
     """Team slug: lowercase, non-alphanumerics -> '-', trimmed. 'Man United' -> 'man-united'."""
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+
+# Season exceptions: the source file's season wins. 2019-20 includes fixtures replayed
+# in Jun-Aug 2020 after the COVID suspension (Q1, contract 1.2.0).
+SEASON_DATE_EXCEPTIONS = {"2019-20": ("2019-07-01", "2020-08-31")}
+
+
+def season_date_bounds(season: str) -> tuple[pd.Timestamp, pd.Timestamp]:
+    """Inclusive date bounds a match in `season` must fall within (UTC dates)."""
+    if season in SEASON_DATE_EXCEPTIONS:
+        a, b = SEASON_DATE_EXCEPTIONS[season]
+    else:
+        y = int(season[:4])
+        a, b = f"{y}-07-01", f"{y + 1}-06-30"
+    return pd.Timestamp(a, tz="UTC"), pd.Timestamp(b, tz="UTC") + pd.Timedelta(days=1) - pd.Timedelta(microseconds=1)
 
 
 def season_str(start_year: int) -> str:
@@ -122,6 +144,7 @@ SCHEMAS: dict[str, dict[str, str]] = {
         "decision_id": "str", "run_id": "str", "policy_id": "cat:POLICY_IDS", "match_id": "str", "model_id": "cat:MODEL_IDS",
         "split": "cat:SPLITS", "decision_time_utc": "ts", "batch_key": "str",
         "quote_id": "str?", "action": "cat:ACTIONS", "selection": "cat:RESULTS?",
+        "bookmaker": "str?",              # bookmaker whose price was executed (null if NO_BET)
         "p_model": "float?", "p_stressed": "float?",
         "odds_offered": "float?", "odds_adjusted": "float?",
         "ev_raw": "float?", "ev_stressed": "float?",

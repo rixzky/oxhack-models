@@ -1,4 +1,4 @@
-// API contract between the Part 3 backend (FastAPI) and the Part 3 frontend (React). Contract v1.1.0.
+// API contract between the Part 3 backend (FastAPI) and the Part 3 frontend (React). Contract v1.2.0.
 // The backend only READS artifact files from Parts 1 and 2 and calls contract/decisions.py for sliders.
 // SINGLE SOURCE OF TRUTH for response shapes. Example payloads: contract/golden/api/*.json
 // Conventions: outcome arrays are always [H, D, A]; times are ISO 8601 UTC strings ending in "Z";
@@ -50,22 +50,29 @@ export interface Fixture {
 export interface QuoteView {
   quote_id: string; bookmaker: string; snapshot: Snapshot;
   observed_at_utc: string | null; timestamp_precision: Precision; source: string; odds: Triple;
+  // Bookmaker behind each of the three prices. All "B365" for the reference quote; may differ for best price.
+  bookmakers?: [string, string, string];
 }
+export type PriceSource = "REFERENCE" | "BEST_AVAILABLE";
+export type PolicyId = "naive" | "controlled" | "controlled_best_price";
 
 export interface PolicyConfig {
   min_ev: number; prob_stress_delta: number; price_haircut: number;
   staking_mode: "FLAT" | "QUARTER_KELLY"; flat_stake_frac: number; kelly_multiplier: number;
   max_stake_frac_per_match: number; max_open_exposure_frac: number; initial_bankroll: number;
   max_quote_age_hours: number; allow_precisions: Precision[]; league_gate: boolean;
+  price_source: PriceSource; best_price_max_prob_gap: number;
 }
 
-// GET /api/replay/{match_id}?model_id=&prob_stress_delta=&price_haircut=&min_ev=
+// GET /api/replay/{match_id}?model_id=&policy_id=controlled|controlled_best_price&prob_stress_delta=&price_haircut=&min_ev=
 // Overriding any policy parameter makes is_exploratory = true. Closing odds and the result
 // are NEVER in this payload; they come only from /reveal.
 export interface Replay {
   dataset_mode: DatasetMode;
   is_exploratory: boolean;
   config_hash: string;
+  policy_id: PolicyId;
+  price_source: PriceSource;
   match: { match_id: string; league: string; season: string; kickoff_utc: string;
            home_team: string; away_team: string; split: Split };
   information_cutoff_utc: string;
@@ -73,11 +80,11 @@ export interface Replay {
   market_probs: Triple | null;
   model: { model_id: string; model_version: string; probs: Triple } | null;
   per_outcome: {
-    outcome: Outcome; p_model: number; p_stressed: number; q_market: number;
-    odds_offered: number; odds_adjusted: number; ev_raw: number; ev_stressed: number;
+    outcome: Outcome; p_model: number; p_stressed: number; q_market: number; // q_market is always Bet365 margin-free
+    odds_offered: number; odds_adjusted: number; bookmaker: string | null; ev_raw: number; ev_stressed: number;
   }[];
   decision: {
-    action: "BET" | "NO_BET"; selection: Outcome | null; stake: number;
+    action: "BET" | "NO_BET"; selection: Outcome | null; stake: number; bookmaker?: string | null;
     reason_code: ReasonCode; reason_codes_all: ReasonCode[]; explanation: string;
   };
   // Optional ML explanation from Part 2 (LightGBM SHAP or MarketNet terms). Empty array if none.
@@ -98,7 +105,7 @@ export interface Reveal {
 
 // GET /api/evidence?model_id=&split=validation|holdout  (built from forecast_metrics.json, policy_metrics.json, feature_importance.json)
 export interface PolicySummary {
-  policy_id: "naive" | "controlled" | string; label: string;
+  policy_id: PolicyId; label: string;
   n_decisions: number; n_bets: number; n_abstain: number;
   turnover: number; profit: number; roi: number | null; max_drawdown: number;
   mean_clv: number | null; sharpe_per_matchweek: number | null; deflated_sharpe: number | null;

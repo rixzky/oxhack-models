@@ -1,4 +1,4 @@
-# CONTRACT.md (shared by all three repos, contract v1.1.0)
+# CONTRACT.md (shared by all three repos, contract v1.2.0)
 
 This file is identical in all three repos. It is the only place where cross-part
 decisions live. If your repo's spec and this file disagree, THIS FILE WINS.
@@ -20,7 +20,8 @@ realistic prices, data checks and errors in our own model?
 Side prizes: Tiger Data, Gemini, DEV Writing Challenge. Paper trading only.
 
 **Data:** football-data.co.uk, 5 to 10 leagues (section 4.1). Decision time is the
-pre-closing snapshot. Closing odds are used only for CLV and evaluation, never as
+pre-closing snapshot. Bet365 is the reference market for every season; a second
+policy executes at the best valid price across individual bookmakers (line shopping). Closing odds are used only for CLV and evaluation, never as
 features. Locked holdout: the 2025-26 season.
 
 **Findings and models**
@@ -141,19 +142,40 @@ Until verified, treat them as assumptions.
 - Closing odds columns (e.g. `PSCH/PSCD/PSCA`, `B365CH/B365CD/B365CA`) exist only for
   recent seasons (believed 2019-20 onwards). CLV is computed only where they exist.
 - Pinnacle pre-closing `PSH/PSD/PSA` exist from roughly 2012-13. Bet365 `B365H/D/A`
-  go back further.
+  go back further. Other individual bookmakers (`BW`, `IW`, `WH`, `VC`) appear for
+  some seasons; Part 1 ingests every individual bookmaker present, per season.
+  Aggregate columns (`Max*`, `Avg*`, older `BbMx*`, `BbAv*`) are stored as `MAX`/`AVG`
+  for the efficiency map only and are never executable.
+- The provider warns that Pinnacle prices are systematically stale from 2025-07-23.
+  Pinnacle rows are kept for audit and the efficiency map but are never executable in
+  2025-26 (`schemas.EXECUTION_EXCLUDE`).
 - Leagues: start with `E0` only for the first slice, then add up to the full list.
   Seasons: `2005-06` to `2025-26`. Do not ingest 2026-27.
+- **Season assignment**: the source file's season wins. Date sanity bounds come from
+  `schemas.season_date_bounds` (Jul 1 to Jun 30, except 2019-20 which runs to
+  2020-08-31 because of fixtures replayed after the COVID suspension). Count the
+  exception rows in the manifest; reject any other out-of-bounds row.
 - **Reference quote rule** (one per match per snapshot, `is_reference = True`):
-  Pinnacle (`PS`) if a valid PS quote exists for that snapshot, else Bet365 (`B365`).
-  Never build a "market" from best prices across bookmakers. `AVG` may be stored for
-  the efficiency map but is never a reference quote and never an offered price.
+  **Bet365 (`B365`) for every season** (`schemas.REFERENCE_BOOKMAKER`). It is the
+  probability benchmark, the model input for market features, the executable price
+  for the `naive` and `controlled` policies, and the CLV benchmark (Bet365 closing).
+  If the Bet365 quote is missing or invalid there is no reference for that match.
+- **Best available price** (policy `controlled_best_price` only): built by
+  `contract.decisions.best_price_quote` from the match's valid PRE_CLOSING quotes of
+  individual, non-excluded, non-outlier bookmakers, per outcome, with a stale-price
+  guard (a price is ignored if its margin-free probability differs from Bet365's by
+  more than `best_price_max_prob_gap`, default 0.10). Never used as a probability
+  benchmark: `q_market` is always Bet365.
 - **Timestamp precision** of football-data quotes:
-  `PRE_CLOSING` -> `observed_at_utc` = approximate capture time if Part 1 can derive it
-  from the notes, precision `WINDOW`; otherwise `observed_at_utc` null, precision
-  `UNKNOWN`. `CLOSING` -> `observed_at_utc` = kickoff_utc, precision `WINDOW`.
-  Kickoff with a time column -> `EXACT` (convert UK local time to UTC); date only ->
-  00:00 UTC of that date, precision `DATE`.
+  `PRE_CLOSING` -> `observed_at_utc` = the **latest plausible capture time** (the end of
+  the documented capture window, e.g. Friday evening for weekend games), precision
+  `WINDOW`; if no window can be justified, `observed_at_utc` null, precision `UNKNOWN`.
+  `CLOSING` -> `observed_at_utc` = kickoff_utc, precision `WINDOW`.
+  Kickoff with a time column -> `EXACT`; date only -> 00:00 UTC of that date, `DATE`.
+- **Kick-off timezone (assumption)**: the `Time` column is treated as `Europe/London`
+  for all leagues. This only affects date-level cutoffs and batch dates; the 2-day
+  buffer absorbs small shifts. Part 1 reports in the audit how many kick-offs fall
+  within 2 hours of midnight UTC (the only ones a wrong timezone could move).
 
 ---
 
@@ -163,9 +185,14 @@ Until verified, treat them as assumptions.
   (`contract.schemas.feature_cutoff`). A feature for a match may only use matches with
   `kickoff_utc < feature_cutoff_utc`. This is deliberately conservative so that it is
   safe for both weekend and midweek capture times.
-- **decision_time_utc** in `predictions` = `feature_cutoff_utc`. The forecast is made
-  with information up to that time. The bet is then executed at the reference
-  `PRE_CLOSING` quote, which is observed at or after that time and before kickoff.
+- **decision_time_utc** in `predictions` = `feature_cutoff_utc`. It is the
+  **information time**: the forecast uses information up to that time only. The bet is
+  **executed later** at the PRE_CLOSING quote. Ignoring information between the cutoff
+  and the quote makes us more conservative, not less, so this is not leakage. What
+  would be leakage, and is blocked: features using anything after the cutoff (validator
+  and Part 2 tests), and executing at a price that may have been captured at or after
+  kickoff (`decide_match` rejects `observed_at_utc >= kickoff_utc` as `STALE_QUOTE`,
+  using the conservative latest-capture time from 4.1).
 - **training_cutoff_utc** <= `feature_cutoff_utc` for every prediction row
   (validator enforces it). Walk-forward: a model may only be fitted on matches that
   kicked off before its training cutoff.
@@ -189,7 +216,8 @@ calls it only for exploratory slider changes. Nobody reimplements it.
 
 ### 6.1 Definitions
 For outcome k with model probability `p_k` and offered decimal odds `O_k` from the
-reference `PRE_CLOSING` quote:
+executable `PRE_CLOSING` quote (Bet365 for `price_source = REFERENCE`, best available
+for `BEST_AVAILABLE`, see 4.1):
 - adjusted odds `O'_k = 1 + (O_k - 1) * (1 - price_haircut)` (adverse-price assumption)
 - stressed probability `p'_k = max(0, p_k - prob_stress_delta)` (a **sensitivity
   assumption**, not a confidence interval; label it that way in the UI)
@@ -202,7 +230,9 @@ reference `PRE_CLOSING` quote:
 2. `MISSING_QUOTE`: no reference `PRE_CLOSING` quote.
 3. `INVALID_PRICE`: reference quote `is_valid = False`.
 4. `STALE_QUOTE`: precision not in `allow_precisions` (default EXACT, DATE, WINDOW,
-   so `UNKNOWN` fails), or `kickoff_utc - observed_at_utc > max_quote_age_hours`.
+   so `UNKNOWN` fails), or `observed_at_utc >= kickoff_utc`, or
+   `kickoff_utc - observed_at_utc > max_quote_age_hours`. For a best-price quote the
+   worst precision and latest observed time of its components are used.
 5. `LEAGUE_NOT_ELIGIBLE`: only if `league_gate = True` (past-season efficiency only).
 6. Select the single outcome with the highest `ev_raw` (one position per match max).
    `EV_BELOW_THRESHOLD` if `ev_raw < min_ev`.
@@ -223,8 +253,9 @@ reference `PRE_CLOSING` quote:
   cap is 0 -> `EXPOSURE_LIMIT_MATCH`); total open stakes (earlier unsettled bets plus
   this batch so far) <= `max_open_exposure_frac * settled bankroll at batch start` (bets that would exceed it get
   `EXPOSURE_LIMIT_TOTAL`); stake > remaining available -> `INSUFFICIENT_BANKROLL`.
-- Settlement after the match: pnl = stake * (O_k - 1) if win, else -stake. Settlement
-  uses the OFFERED odds, not the adjusted odds (the haircut is a decision assumption).
+- Settlement after the match: pnl = stake * (O_k - 1) if win, else -stake, at the
+  executed bookmaker's OFFERED odds (column `bookmaker` in the ledger), not the adjusted
+  odds (the haircut is a decision assumption).
 - Defaults (`frozen_config.json` policy block): `min_ev 0.02`, `prob_stress_delta 0.02`,
   `price_haircut 0.0`, `FLAT`, `flat_stake_frac 0.01`, `kelly_multiplier 0.25`,
   `max_stake_frac_per_match 0.02`, `max_open_exposure_frac 0.20`,
@@ -247,9 +278,10 @@ probabilities, stakes, odds or news.
   [0, 1], report `n`, mean predicted, observed frequency per bin.
 - **Forecast comparisons** use the SAME eligible matches for every model (inner join on
   match_id within the split).
-- **CLV** (per bet, only where a closing reference quote exists):
-  `O_offered * q_close - 1`, q_close = margin-free closing probability of the same
-  outcome from the closing reference quote (`maths.clv`). A benchmark, not proof.
+- **CLV** (per bet, only where a Bet365 closing quote exists):
+  `O_offered * q_close - 1`, q_close = margin-free Bet365 closing probability of the
+  same outcome (`maths.clv`), for every policy including best price. A benchmark, not
+  proof.
 - **Policy metrics**: n decisions, n bets, n abstentions, reason counts, turnover
   (sum of stakes), profit, ROI = profit / turnover, max drawdown of the settled
   bankroll curve, mean CLV.
@@ -259,9 +291,13 @@ probabilities, stakes, odds or news.
   settings tried, logged by Parts 1 and 2).
 - **Uncertainty**: 95% bootstrap intervals resampling **matchweek_key** blocks, 2000
   resamples, seed 0, for ROI and for log-loss differences vs the market.
-- Two policies are always compared on the same matches: `naive`
-  (`contract.decisions.NAIVE_POLICY`: EV > 0 on raw offered odds, no checks, flat
-  stakes) and `controlled` (`DEFAULT_POLICY` or the frozen policy: all of section 6).
+- Three policies are always compared on the same matches (`contract.decisions.POLICIES`):
+  `naive` (EV > 0 at raw Bet365 odds, no checks, flat stakes), `controlled` (Bet365
+  prices, all of section 6) and `controlled_best_price` (same checks and caps, best
+  available price). **Line-shopping value** = ROI of `controlled_best_price` minus
+  `controlled`, with a matchweek-block bootstrap interval, reported next to the
+  difference in number of bets and turnover. Best-of-many prices are biased upwards by
+  stale or wrong quotes; say so wherever the number is shown.
 - **Who computes what:** Part 2 computes forecast metrics (from predictions and
   outcomes) and policy metrics (from Part 1's `decisions.parquet`). Part 3 never
   recomputes either. Report
@@ -374,10 +410,16 @@ Endpoints: `GET /api/meta`, `GET /api/efficiency-map`, `GET /api/fixtures`,
 
 ## 13. Change log
 - 1.0.0: initial contract.
+- 1.2.0: Bet365 is the reference for all seasons; best-price policy `controlled_best_price`
+  with `best_price_quote`; `bookmaker` column in decisions; more bookmaker codes;
+  Pinnacle not executable in 2025-26; quotes at or after kickoff rejected; WINDOW times
+  store the latest plausible capture; 2019-20 season exception; timezone assumption
+  documented (answers Q1 to Q4).
 - 1.1.0: parts re-split (Part 1 Data and Decisions, Part 2 Models and Evaluation, Part 3 App/UI only); `contract/decisions.py` added; `policy_id` column in decisions; `prediction_explanations` table; LightGBM with SHAP is a planned model.
 
-## 14. Open items to verify (Part 1 reports back by Sat 14:00)
-- football-data.co.uk terms permit our use; record in `data_manifest.md`.
-- Exact pre-closing capture timing and closing-odds season coverage from `notes.txt`.
-- Whether the Time column is UK local time.
+## 14. Open items
+- football-data.co.uk terms permit our use; record in `data_manifest.md` (Part 1).
+- Closing-odds season coverage per bookmaker from `notes.txt` (Part 1).
 - HRT judging criteria and submission deadline (whole team).
+- Resolved in 1.2.0: 2019-20 boundary, quote time vs decision time, stale Pinnacle,
+  kick-off timezone.

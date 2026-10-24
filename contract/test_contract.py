@@ -88,7 +88,7 @@ def test_validator_rejects_leakage():
 
 
 # ---------------------------------------------------------------- shared decision function
-from contract.decisions import decide_match  # noqa: E402
+from contract.decisions import best_price_quote, decide_match  # noqa: E402
 
 
 def _quote(q):
@@ -102,7 +102,7 @@ def _quote(q):
 def test_decide_match_vectors(case):
     d = decide_match(case["probs"], _quote(case["quote"]), pd.Timestamp(case["kickoff_utc"]), case["policy"])
     e = case["expected"]
-    for k in ("action", "selection", "reason_code", "reason_codes_all", "best_outcome"):
+    for k in ("action", "selection", "reason_code", "reason_codes_all", "best_outcome", "bookmaker"):
         assert d[k] == e[k], k
     for k in ("ev_raw", "ev_stressed", "proposed_stake"):
         if e[k] is None:
@@ -116,3 +116,30 @@ def test_decide_match_regression_rejects_short_favourite():
          "observed_at_utc": pd.Timestamp("2025-01-03T14:00:00Z")}
     d = decide_match([0.52, 0.28, 0.20], q, pd.Timestamp("2025-01-04T15:00:00Z"))
     assert d["action"] == "NO_BET"
+
+
+@pytest.mark.parametrize("case", V["best_price"])
+def test_best_price_vectors(case):
+    qs = [{**q, "observed_at_utc": pd.Timestamp(q["observed_at_utc"])} for q in case["quotes"]]
+    b = best_price_quote(qs, case["season"])
+    if case["expected"] is None:
+        assert b is None
+    else:
+        for k in ("odds", "bookmakers", "ref_odds", "timestamp_precision"):
+            assert b[k] == case["expected"][k], k
+
+
+def test_quote_at_or_after_kickoff_rejected():
+    ko = pd.Timestamp("2025-01-04T15:00:00Z")
+    q = {"quote_id": "x", "odds": [3.10, 3.50, 2.80], "is_valid": True, "timestamp_precision": "WINDOW",
+         "observed_at_utc": ko}
+    assert decide_match([0.30, 0.28, 0.42], q, ko)["reason_code"] == "STALE_QUOTE"
+
+
+def test_market_benchmark_uses_reference_odds_not_best_price():
+    ko = pd.Timestamp("2025-01-04T15:00:00Z")
+    q = {"quote_id": "x", "odds": [3.20, 3.50, 2.90], "ref_odds": [3.10, 3.50, 2.80], "is_valid": True,
+         "timestamp_precision": "WINDOW", "observed_at_utc": ko - pd.Timedelta(hours=20)}
+    d = decide_match([0.30, 0.28, 0.42], q, ko)
+    from contract.maths import implied_probs
+    assert [r["q_market"] for r in d["per_outcome"]] == pytest.approx(implied_probs([3.10, 3.50, 2.80])[0])

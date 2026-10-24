@@ -1,28 +1,28 @@
 {
-  "match_id": "E0_2024-25_20241009_irwell_hollins",
+  "match_id": "E0_2024-25_20241009_elmfield_alder-fc",
   "closing_quote": {
-    "quote_id": "Q001242",
-    "bookmaker": "PS",
+    "quote_id": "Q002482",
+    "bookmaker": "B365",
     "snapshot": "CLOSING",
     "observed_at_utc": "2024-10-09T14:00:00Z",
     "timestamp_precision": "WINDOW",
     "source": "SYNTHETIC",
     "odds": [
-      2.03,
-      3.98,
-      3.56
+      1.43,
+      4.91,
+      6.72
     ]
   },
   "closing_fair_probs": [
-    0.480706,
-    0.245184,
-    0.27411
+    0.664876,
+    0.19364,
+    0.141484
   ],
   "result": {
-    "home_goals": 5,
-    "away_goals": 1,
-    "result": "H"
+    "home_goals": 0,
+    "away_goals": 0,
+    "result": "D"
   },
-  "clv": -0.024167,
-  "settled_pnl": 10.3
+  "clv": null,
+  "settled_pnl": null
 }

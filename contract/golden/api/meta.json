@@ -1,5 +1,5 @@
 {
-  "contract_version": "1.1.0",
+  "contract_version": "1.2.0",
   "dataset_mode": "SYNTHETIC",
   "storage_backend": "local",
   "gemini_enabled": false,
@@ -19,6 +19,6 @@
     "elo",
     "lgbm"
   ],
-  "frozen_config_hash": "0881e4052cac",
+  "frozen_config_hash": "4b27295c3f96",
   "holdout_locked": false
 }

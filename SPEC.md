@@ -23,7 +23,8 @@ You own all the statistics and ML.
 From Part 1: `matches`, `outcomes`, `quotes`, `market_probs`, `splits.json`, and later
 `decisions.parquet` and policy trials in `trials_log.jsonl`. Read with
 `contract.schemas.read_table`. Model inputs use only `is_reference=True`,
-`snapshot="PRE_CLOSING"` market rows. **Never read CLOSING rows or the outcome of the
+`snapshot="PRE_CLOSING"` market rows, which are Bet365 in every season (contract
+1.2.0), so train and holdout see the same bookmaker. **Never read CLOSING rows or the outcome of the
 match being predicted** when building its features.
 
 ## 3. You produce (into `artifacts/`)
@@ -98,12 +99,17 @@ model) to Part 1, who writes `frozen_config.json`.
   on validation; bootstrap 95% interval of the log-loss difference vs `market`
   (matchweek blocks, 2000 resamples, seed 0).
 - **Policy** (`evaluation/policy.py`), from Part 1's `decisions.parquet`, per model x
-  split x policy: n decisions, bets, abstentions, reason counts, turnover, profit,
+  split x policy (`naive`, `controlled`, `controlled_best_price`): n decisions, bets, abstentions, reason counts, turnover, profit,
   ROI, max drawdown of the settled bankroll curve, mean CLV (bets with closing quotes),
   Sharpe per matchweek (batch profit / available bankroll at batch start), deflated
   Sharpe (Bailey and Lopez de Prado, number of trials = lines in the merged
   `trials_log.jsonl`), bootstrap 95% interval for ROI by matchweek blocks. Equity
   curve: settled bankroll per batch, with drawdown.
+- **Line-shopping value**: ROI of `controlled_best_price` minus `controlled` per model
+  and split, with a matchweek-block bootstrap interval (resample the same matchweeks for
+  both policies), plus the difference in bets and turnover. Add it to each
+  `policy_metrics.json` row as `line_shopping`: `{roi_diff, ci_95, bets_diff,
+  turnover_diff}`. Note the upward bias of best-of-many prices in `model_card.md`.
 - Report turnover next to returns. Do not call a lower-turnover policy "better" by
   itself.
 
