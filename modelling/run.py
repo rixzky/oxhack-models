@@ -18,11 +18,24 @@ ALL_MODELS = ["market", "elo", "dixon_coles", "marketnet", "lgbm"]
 ML_MODELS = {"marketnet", "lgbm"}
 
 
+def _read_parquet(path, table: str) -> pd.DataFrame:
+    """Read parquet using pyarrow (golden) or fastparquet (real artifacts)."""
+    try:
+        return read_table(path, table)
+    except Exception:
+        from contract.schemas import validate
+        df = pd.read_parquet(path, engine="fastparquet")
+        for col in ["kickoff_utc", "feature_cutoff_utc"]:
+            if col in df.columns:
+                df[col] = pd.to_datetime(df[col], utc=True)
+        return validate(table, df)
+
+
 def _load_inputs(golden: bool):
     src = GOLDEN_TABLES if golden else ARTIFACTS_DIR
-    matches = read_table(src / "matches.parquet", "matches")
-    market_probs = read_table(src / "market_probs.parquet", "market_probs")
-    outcomes = read_table(src / "outcomes.parquet", "outcomes")
+    matches = _read_parquet(src / "matches.parquet", "matches")
+    market_probs = _read_parquet(src / "market_probs.parquet", "market_probs")
+    outcomes = _read_parquet(src / "outcomes.parquet", "outcomes")
 
     splits_path = (GOLDEN_JSON / "splits.json") if golden else (ARTIFACTS_DIR / "splits.json")
     splits_by_season: dict[str, str] = json.loads(splits_path.read_text())["by_season"]
