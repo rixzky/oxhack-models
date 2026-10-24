@@ -17,7 +17,10 @@ import shap
 from modelling.features import FEATURE_COLS
 
 MODEL_ID = "lgbm"
-MODEL_VERSION = "lgbm-1.0"
+MODEL_VERSION = "lgbm-1.1"
+
+HL_CANDIDATES = [90, 180, 365, 730]   # half-life in days for sample weighting
+MAX_TRAIN_SEASONS = 8
 
 LGB_PARAMS = {
     "objective": "multiclass",
@@ -51,13 +54,20 @@ def _prep(feat_df: pd.DataFrame, outcomes: pd.DataFrame | None = None):
     return X, y
 
 
+def _sample_weights(feat_df: pd.DataFrame, training_cutoff: pd.Timestamp, half_life: float) -> np.ndarray:
+    days = (training_cutoff - feat_df["kickoff_utc"]).dt.total_seconds() / 86400
+    w = np.exp(-np.log(2) * days.clip(lower=0).values / half_life).astype(np.float32)
+    return w / w.mean()
+
+
 def _fit(
     X_train: np.ndarray,
     y_train: np.ndarray,
     X_val: np.ndarray,
     y_val: np.ndarray,
+    sample_weight: np.ndarray | None = None,
 ) -> lgb.Booster:
-    dtrain = lgb.Dataset(X_train, label=y_train, feature_name=FEATURE_COLS)
+    dtrain = lgb.Dataset(X_train, label=y_train, feature_name=FEATURE_COLS, weight=sample_weight)
     dval = lgb.Dataset(X_val, label=y_val, feature_name=FEATURE_COLS, reference=dtrain)
     callbacks = [lgb.early_stopping(EARLY_STOPPING_ROUNDS, verbose=False),
                  lgb.log_evaluation(period=-1)]
@@ -99,9 +109,12 @@ def predict_all(
     best_model: lgb.Booster | None = None
     best_imp: dict = {}
 
-    # pre-collect calibration features for early stopping
+    # pre-collect calibration features for early stopping + HL tuning
     cal_feat = feat_table[feat_table["split"] == "calibration"]
     X_cal, y_cal = _prep(cal_feat, outcomes) if len(cal_feat) > 0 else (None, None)
+
+    best_hl = HL_CANDIDATES[-1]   # default: least decay; updated once on calibration
+    hl_tuned = False
 
     for i, season in enumerate(seasons):
         season_feat = feat_table[feat_table["season"] == season]
@@ -113,7 +126,23 @@ def predict_all(
         train_seasons = [
             s for s in seasons[:i]
             if splits_by_season.get(s) in ("warmup", "train")
-        ]
+        ][-MAX_TRAIN_SEASONS:]
+
+        # --- half-life tuning (once on calibration split) ---
+        if season_split == "calibration" and not hl_tuned and X_cal is not None and y_cal is not None:
+            tune_train = feat_table[feat_table["season"].isin(train_seasons)]
+            if len(tune_train) >= 30:
+                tc = matches[matches["season"].isin(train_seasons)]["kickoff_utc"].max()
+                X_tt, y_tt = _prep(tune_train, outcomes)[:2]
+                best_ll_hl, best_hl = np.inf, HL_CANDIDATES[-1]
+                for hl in HL_CANDIDATES:
+                    sw = _sample_weights(tune_train, tc, hl)
+                    m = _fit(X_tt, y_tt, X_cal, y_cal, sample_weight=sw)
+                    probs = m.predict(X_cal)
+                    ll = -np.log(probs[np.arange(len(y_cal)), y_cal].clip(1e-15)).mean()
+                    if ll < best_ll_hl:
+                        best_ll_hl, best_hl = ll, hl
+            hl_tuned = True
 
         if len(train_seasons) == 0:
             for _, row in season_feat.iterrows():
@@ -141,16 +170,16 @@ def predict_all(
                 all_preds.append(_stub_row(row, feat_table))
             continue
 
-        model = _fit(X_train, y_train, X_v, y_v)
-        best_model = model
-
         training_cutoff = matches[matches["season"].isin(train_seasons)]["kickoff_utc"].max()
+        sw = _sample_weights(train_feat, training_cutoff, best_hl)
+        model = _fit(X_train, y_train, X_v, y_v, sample_weight=sw)
+        best_model = model
 
         X_pred, _ = _prep(season_feat)
         probs = model.predict(X_pred)   # (n, 3)
 
         if trials_path:
-            _log_trial(trials_path, model.num_trees(), season)
+            _log_trial(trials_path, model.num_trees(), season, best_hl)
 
         for j, (_, row) in enumerate(season_feat.iterrows()):
             tc = min(training_cutoff, row["feature_cutoff_utc"])
@@ -243,11 +272,11 @@ def _stub_row(row: pd.Series, feat_table: pd.DataFrame) -> dict:
     }
 
 
-def _log_trial(path: Path, n_trees: int, season: str) -> None:
+def _log_trial(path: Path, n_trees: int, season: str, half_life: float) -> None:
     import datetime
     entry = {"time": datetime.datetime.utcnow().isoformat() + "Z",
              "part": 2, "model_id": MODEL_ID, "model_version": MODEL_VERSION,
-             "what_changed": f"season={season} n_trees={n_trees}",
+             "what_changed": f"season={season} n_trees={n_trees} half_life={half_life}d",
              "val_log_loss": None}
     with open(path, "a") as f:
         f.write(json.dumps(entry) + "\n")

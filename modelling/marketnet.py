@@ -21,9 +21,11 @@ import torch.nn.functional as F
 from modelling.features import FEATURE_COLS
 
 MODEL_ID = "marketnet"
-MODEL_VERSION = "mn-1.0"
+MODEL_VERSION = "mn-1.1"
 
 LAMBDA_CANDIDATES = [1e-3, 1e-2, 1e-1, 1.0, 10.0]
+HL_CANDIDATES = [90, 180, 365, 730]   # half-life in days for sample weighting
+MAX_TRAIN_SEASONS = 8
 LR = 5e-3
 MAX_EPOCHS = 2000
 PATIENCE = 50
@@ -43,11 +45,18 @@ class _Net(torch.nn.Module):
         return F.softmax(log_q + delta, dim=1)
 
 
+def _sample_weights(feat_df: pd.DataFrame, training_cutoff: pd.Timestamp, half_life: float) -> np.ndarray:
+    days = (training_cutoff - feat_df["kickoff_utc"]).dt.total_seconds() / 86400
+    w = np.exp(-np.log(2) * days.clip(lower=0).values / half_life).astype(np.float32)
+    return w / w.mean()  # keep mean=1 so NLL scale is comparable across half-lives
+
+
 def _fit(
     log_q: np.ndarray,
     X: np.ndarray,
     y: np.ndarray,         # integer labels 0=H,1=D,2=A
     lam: float,
+    weights: np.ndarray | None = None,
     seed: int = 0,
 ) -> _Net:
     torch.manual_seed(seed)
@@ -58,12 +67,13 @@ def _fit(
     lq = torch.tensor(log_q, dtype=torch.float32)
     Xt = torch.tensor(X, dtype=torch.float32)
     yt = torch.tensor(y, dtype=torch.long)
+    wt = torch.tensor(weights, dtype=torch.float32) if weights is not None else torch.ones(len(y))
 
     best_loss, best_state, patience = np.inf, None, 0
     for epoch in range(MAX_EPOCHS):
         opt.zero_grad()
         p = net(lq, Xt)
-        nll = F.nll_loss(torch.log(p.clamp(1e-15)), yt)
+        nll = (F.nll_loss(torch.log(p.clamp(1e-15)), yt, reduction="none") * wt).mean()
         l2 = lam * (net.W ** 2).sum()
         loss = nll + l2
         loss.backward()
@@ -142,7 +152,8 @@ def predict_all(
     all_preds: list[dict] = []
     all_explanations: list[dict] = []
 
-    best_lam = LAMBDA_CANDIDATES[2]   # default; will be updated by calibration tuning
+    best_lam = LAMBDA_CANDIDATES[2]   # default; updated by calibration tuning
+    best_hl = HL_CANDIDATES[-1]        # default: least decay
     lam_tuned = False
     best_net = None
     best_mu = best_sd = None
@@ -157,33 +168,38 @@ def predict_all(
         train_seasons = [
             s for s in seasons[:i]
             if splits_by_season.get(s) in ("warmup", "train")
-        ]
+        ][-MAX_TRAIN_SEASONS:]
 
-        # --- lambda tuning (once, using train → calibration) ---
+        # --- joint lambda + half-life tuning (once, using train → calibration) ---
         if season_split == "calibration" and not lam_tuned:
             cal_feat = season_feat
             train_feat = feat_table[feat_table["season"].isin(train_seasons)]
             if len(train_feat) >= 20:
+                tc = matches[matches["season"].isin(train_seasons)]["kickoff_utc"].max()
                 log_q_tr, X_tr, y_tr, mu, sd = _prep(train_feat, outcomes)
-                log_q_cal, X_cal_raw, _, _, _ = _prep(cal_feat)
-                X_cal = (X_cal_raw * (sd + 1e-8) + mu - mu) / (sd + 1e-8)  # reuse same norm
                 X_cal = (feat_table[feat_table["season"].isin([season])][FEATURE_COLS]
                          .fillna(feat_table[feat_table["season"].isin([season])][FEATURE_COLS].median())
                          .values.astype(np.float32))
                 X_cal = (X_cal - mu) / (sd + 1e-8)
+                log_q_cal = np.column_stack([
+                    np.log(cal_feat["q_home"].clip(1e-6).values),
+                    np.log(cal_feat["q_draw"].clip(1e-6).values),
+                    np.log(cal_feat["q_away"].clip(1e-6).values),
+                ]).astype(np.float32)
                 cal_outcomes = cal_feat.merge(outcomes[["match_id", "result"]], on="match_id")
                 y_cal = cal_outcomes["result"].map({"H": 0, "D": 1, "A": 2}).values
 
-                best_ll, best_lam = np.inf, LAMBDA_CANDIDATES[2]
-                for lam in LAMBDA_CANDIDATES:
-                    net = _fit(log_q_tr, X_tr, y_tr, lam)
-                    p_cal = _predict(net, log_q_cal, X_cal)
-                    idx = np.arange(len(y_cal))
-                    ll = -np.log(p_cal[idx, y_cal].clip(1e-15)).mean()
-                    if ll < best_ll:
-                        best_ll, best_lam = ll, lam
+                best_ll, best_lam, best_hl = np.inf, LAMBDA_CANDIDATES[2], HL_CANDIDATES[-1]
+                for hl in HL_CANDIDATES:
+                    w = _sample_weights(train_feat, tc, hl)
+                    for lam in LAMBDA_CANDIDATES:
+                        net = _fit(log_q_tr, X_tr, y_tr, lam, weights=w)
+                        p_cal = _predict(net, log_q_cal, X_cal)
+                        ll = -np.log(p_cal[np.arange(len(y_cal)), y_cal].clip(1e-15)).mean()
+                        if ll < best_ll:
+                            best_ll, best_lam, best_hl = ll, lam, hl
                 if trials_path:
-                    _log_trial(trials_path, best_lam, best_ll)
+                    _log_trial(trials_path, best_lam, best_hl, best_ll)
             lam_tuned = True
 
         # --- fit on all prior training seasons ---
@@ -198,11 +214,11 @@ def predict_all(
                 all_preds.append(_stub_row(row))
             continue
 
-        log_q_tr, X_tr, y_tr, mu, sd = _prep(train_feat, outcomes)
-        net = _fit(log_q_tr, X_tr, y_tr, best_lam)
-        best_net, best_mu, best_sd = net, mu, sd
-
         training_cutoff = matches[matches["season"].isin(train_seasons)]["kickoff_utc"].max()
+        log_q_tr, X_tr, y_tr, mu, sd = _prep(train_feat, outcomes)
+        w = _sample_weights(train_feat, training_cutoff, best_hl)
+        net = _fit(log_q_tr, X_tr, y_tr, best_lam, weights=w)
+        best_net, best_mu, best_sd = net, mu, sd
 
         # --- predict this season ---
         X_raw = (season_feat[FEATURE_COLS]
@@ -220,7 +236,7 @@ def predict_all(
         W = net.W.detach().numpy()   # (2, n_features)
 
         for j, (_, row) in enumerate(season_feat.iterrows()):
-            tc = min(training_cutoff, row["feature_cutoff_utc"])
+            tc = min(training_cutoff, row["feature_cutoff_utc"])  # training_cutoff set above
             all_preds.append({
                 "match_id": row["match_id"],
                 "model_id": MODEL_ID,
@@ -292,10 +308,11 @@ def _stub_row(row: pd.Series) -> dict:
     }
 
 
-def _log_trial(path: Path, lam: float, val_ll: float) -> None:
+def _log_trial(path: Path, lam: float, hl: float, val_ll: float) -> None:
     import datetime
     entry = {"time": datetime.datetime.utcnow().isoformat() + "Z",
              "part": 2, "model_id": MODEL_ID, "model_version": MODEL_VERSION,
-             "what_changed": f"lambda={float(lam)}", "val_log_loss": round(float(val_ll), 6)}
+             "what_changed": f"lambda={float(lam)} half_life={float(hl)}d",
+             "val_log_loss": round(float(val_ll), 6)}
     with open(path, "a") as f:
         f.write(json.dumps(entry) + "\n")

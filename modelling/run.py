@@ -98,14 +98,18 @@ def main() -> None:
                 (p for p in all_preds if p["model_id"].iloc[0] == "dixon_coles"),
                 None,
             )
-            # also check existing artifacts
+            # also check existing artifacts (only if match IDs overlap — guards against stale files)
             if dc_preds is None:
                 ap = ARTIFACTS_DIR / "predictions.parquet"
                 if ap.exists():
-                    existing = read_table(ap, "predictions")
-                    dc_sub = existing[existing["model_id"] == "dixon_coles"]
-                    if len(dc_sub) > 0:
-                        dc_preds = dc_sub
+                    try:
+                        existing = _read_parquet(ap, "predictions")
+                        dc_sub = existing[existing["model_id"] == "dixon_coles"]
+                        current_ids = set(matches["match_id"])
+                        if len(dc_sub) > 0 and len(dc_sub[dc_sub["match_id"].isin(current_ids)]) > 0:
+                            dc_preds = dc_sub[dc_sub["match_id"].isin(current_ids)]
+                    except Exception:
+                        pass
             feat_table = feat_mod.build(matches_with_split, ref_pre, outcomes, dc_preds)
             feat_table.to_parquet(ARTIFACTS_DIR / "x_features.parquet", index=False)
             print(f"    feature table: {len(feat_table)} rows x {len(feat_mod.FEATURE_COLS)} features")
