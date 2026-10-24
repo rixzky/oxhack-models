@@ -88,17 +88,30 @@ Holdout season: 2025-26 (locked at the freeze)
 
 ---
 
-## Evaluation summary (validation split, real data — 2024-25)
+## Evaluation summary (validation split, real data — 2024-25, 2916 matches)
 
-| Model | Log loss | Brier | Notes |
+### Forecast metrics
+
+| Model | Log loss | Brier | vs market (bootstrap CI) |
 |---|---|---|---|
-| market | 0.9725 | 0.5790 | Bet365 baseline |
-| elo | 0.9990 | 0.5974 | — |
-| dixon_coles | 1.0008 | 0.5984 | — |
-| marketnet | TBD | TBD | pending full run |
-| lgbm | TBD | TBD | pending full run |
+| **marketnet** | **0.9705** | 0.5780 | −0.0021 [−0.0033, −0.0008] ✓ significant |
+| lgbm | 0.9709 | 0.5782 | −0.0016 [−0.0034, +0.0002] borderline |
+| market | 0.9725 | 0.5790 | baseline |
+| elo | 0.9990 | 0.5974 | +0.0265 worse |
+| dixon_coles | 1.0008 | 0.5984 | +0.0283 worse |
 
-"No model beats the market" is a reportable result. The market baseline reflects genuine informational efficiency of the Bet365 pre-closing line.
+### Policy metrics (naive policy, 2916 validation matches per model)
+
+| Model | Bets | ROI | Bootstrap CI 95% | Mean CLV |
+|---|---|---|---|---|
+| lgbm | 1254 | +1.0% | [−8.9%, +10.8%] | −4.4% |
+| marketnet | 453 | +0.6% | [−12.7%, +13.9%] | −4.5% |
+| dixon_coles | 889 | −11.3% | [−18.8%, −4.5%] | −5.0% |
+| elo | 466 | −21.6% | [−36.0%, −4.6%] | −4.3% |
+
+Policy ROI CIs overlap zero for lgbm and marketnet — no model shows statistically significant betting profitability. Negative CLV across the board confirms the market is well-priced.
+
+**Recommended model for freeze: marketnet** — lowest log loss, only model with a statistically significant forecasting edge over the market baseline.
 
 ---
 

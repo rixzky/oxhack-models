@@ -16,6 +16,7 @@ Last updated: 2026-10-24
 - **evaluation/bootstrap**: Matchweek-block bootstrap for ROI CI and paired diff CI.
 - **evaluation/lock_holdout**: Writes holdout_locked.json once, refuses overwrite.
 - **Real artifacts**: Marlon's 8-league data (62k matches, 2005-06 to 2025-26) integrated. All 5 models run successfully.
+- **policy_metrics.json**: Complete — all 5 models × 3 policies × validation (43,740 decisions). Ready for Armaan.
 - **contract tests + model tests + evaluation tests**: 59/59 pass (`python -m pytest -q`).
 - Golden parquet regeneration works (`python -m contract.golden.generate_golden`).
 
@@ -34,8 +35,7 @@ Last updated: 2026-10-24
 ## Stubbed or partial
 
 - **holdout_locked.json**: Written at the freeze only (`python -m evaluation.lock_holdout`). Refuses to overwrite.
-- **policy_metrics for dixon_coles / marketnet / lgbm**: Marlon's decisions.parquet (Part 1) currently only covers `market` and `elo`. Once he re-runs Part 1 with our predictions.parquet, all 5 models will appear in policy_metrics.json automatically.
-- **model_card.md validation numbers**: marketnet and lgbm values now filled in (real data run complete).
+- **Holdout predictions**: Excluded until team freeze. Run `python -m modelling.run --include-holdout` for frozen model only after freeze.
 
 ## How to run
 
