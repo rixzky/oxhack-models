@@ -1,0 +1,176 @@
+{
+  "label": "DEMONSTRATION SCENARIOS (constructed inputs, not historical findings)",
+  "scenarios": [
+    {
+      "id": "likely_winner_negative_ev",
+      "title": "Likely winner, but the price is too short",
+      "p_model": [
+        0.52,
+        0.28,
+        0.2
+      ],
+      "odds": [
+        1.9,
+        3.6,
+        4.8
+      ],
+      "timestamp_precision": "WINDOW",
+      "decision": {
+        "action": "NO_BET",
+        "selection": null,
+        "stake": 0.0,
+        "reason_code": "EV_BELOW_THRESHOLD",
+        "reason_codes_all": [
+          "EV_BELOW_THRESHOLD"
+        ],
+        "explanation": "No bet: the best option, Draw at 3.60, has expected profit +0.8% per unit at the offered price, below the +2.0% threshold."
+      },
+      "per_outcome": [
+        {
+          "outcome": "H",
+          "p_model": 0.52,
+          "p_stressed": 0.5,
+          "q_market": 0.519856,
+          "odds_offered": 1.9,
+          "odds_adjusted": 1.9,
+          "ev_raw": -0.012,
+          "ev_stressed": -0.05
+        },
+        {
+          "outcome": "D",
+          "p_model": 0.28,
+          "p_stressed": 0.26,
+          "q_market": 0.274368,
+          "odds_offered": 3.6,
+          "odds_adjusted": 3.6,
+          "ev_raw": 0.008,
+          "ev_stressed": -0.064
+        },
+        {
+          "outcome": "A",
+          "p_model": 0.2,
+          "p_stressed": 0.18,
+          "q_market": 0.205776,
+          "odds_offered": 4.8,
+          "odds_adjusted": 4.8,
+          "ev_raw": -0.04,
+          "ev_stressed": -0.136
+        }
+      ]
+    },
+    {
+      "id": "stale_quote",
+      "title": "Apparent value, unverified quote time",
+      "p_model": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "odds": [
+        3.1,
+        3.5,
+        2.8
+      ],
+      "timestamp_precision": "UNKNOWN",
+      "decision": {
+        "action": "NO_BET",
+        "selection": null,
+        "stake": 0.0,
+        "reason_code": "STALE_QUOTE",
+        "reason_codes_all": [
+          "STALE_QUOTE"
+        ],
+        "explanation": "No bet: the quote's observation time is unknown or too old to trust."
+      },
+      "per_outcome": [
+        {
+          "outcome": "H",
+          "p_model": 0.3,
+          "p_stressed": 0.28,
+          "q_market": 0.334129,
+          "odds_offered": 3.1,
+          "odds_adjusted": 3.1,
+          "ev_raw": -0.07,
+          "ev_stressed": -0.132
+        },
+        {
+          "outcome": "D",
+          "p_model": 0.28,
+          "p_stressed": 0.26,
+          "q_market": 0.295943,
+          "odds_offered": 3.5,
+          "odds_adjusted": 3.5,
+          "ev_raw": -0.02,
+          "ev_stressed": -0.09
+        },
+        {
+          "outcome": "A",
+          "p_model": 0.42,
+          "p_stressed": 0.4,
+          "q_market": 0.369928,
+          "odds_offered": 2.8,
+          "odds_adjusted": 2.8,
+          "ev_raw": 0.176,
+          "ev_stressed": 0.12
+        }
+      ]
+    },
+    {
+      "id": "survives_stress",
+      "title": "Edge survives the stress test",
+      "p_model": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "odds": [
+        3.1,
+        3.5,
+        2.8
+      ],
+      "timestamp_precision": "WINDOW",
+      "decision": {
+        "action": "BET",
+        "selection": "A",
+        "stake": 10.0,
+        "reason_code": "ACCEPTED",
+        "reason_codes_all": [
+          "ACCEPTED"
+        ],
+        "explanation": "Bet Away at 2.80: expected profit +17.6% per unit, still +12.0% after assuming our probability is 2.0pp too high, above the +2.0% threshold. Stake 10.00 units."
+      },
+      "per_outcome": [
+        {
+          "outcome": "H",
+          "p_model": 0.3,
+          "p_stressed": 0.28,
+          "q_market": 0.334129,
+          "odds_offered": 3.1,
+          "odds_adjusted": 3.1,
+          "ev_raw": -0.07,
+          "ev_stressed": -0.132
+        },
+        {
+          "outcome": "D",
+          "p_model": 0.28,
+          "p_stressed": 0.26,
+          "q_market": 0.295943,
+          "odds_offered": 3.5,
+          "odds_adjusted": 3.5,
+          "ev_raw": -0.02,
+          "ev_stressed": -0.09
+        },
+        {
+          "outcome": "A",
+          "p_model": 0.42,
+          "p_stressed": 0.4,
+          "q_market": 0.369928,
+          "odds_offered": 2.8,
+          "odds_adjusted": 2.8,
+          "ev_raw": 0.176,
+          "ev_stressed": 0.12
+        }
+      ]
+    }
+  ]
+}

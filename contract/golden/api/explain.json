@@ -1,0 +1,5 @@
+{
+  "available": false,
+  "text": null,
+  "reason": "Gemini not configured. The UI must still work and must not show it as active."
+}

@@ -1,0 +1,26 @@
+{
+  "contract_version": "1.1.0",
+  "dataset_mode": "SYNTHETIC",
+  "produced_by": "contract/golden/generate_golden.py",
+  "produced_at_utc": "2026-10-24T12:00:00Z",
+  "leagues": [
+    "D1",
+    "E0"
+  ],
+  "seasons": [
+    "2021-22",
+    "2022-23",
+    "2023-24",
+    "2024-25",
+    "2025-26"
+  ],
+  "sources": [
+    {
+      "name": "synthetic generator",
+      "url": null,
+      "terms_checked": null,
+      "download_date": null,
+      "limitations": "Invented teams and prices. Shape testing only."
+    }
+  ]
+}

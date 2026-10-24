@@ -1,0 +1,77 @@
+{
+  "dataset_mode": "SYNTHETIC",
+  "rows": [
+    {
+      "model_id": "lgbm",
+      "model_version": "golden-stub-1",
+      "method": "mean_abs_shap",
+      "split": "validation",
+      "features": [
+        {
+          "feature": "dc_logratio_home",
+          "importance": 0.046274112884578
+        },
+        {
+          "feature": "dc_logratio_away",
+          "importance": 0.03815736499148552
+        },
+        {
+          "feature": "rest_days_diff",
+          "importance": 0.03377209004434927
+        },
+        {
+          "feature": "elo_diff",
+          "importance": 0.02527617955982115
+        },
+        {
+          "feature": "q_draw",
+          "importance": 0.015577336767626116
+        },
+        {
+          "feature": "fav_log_q",
+          "importance": 0.0024949687517056953
+        },
+        {
+          "feature": "league_E0",
+          "importance": 0.002467361982687071
+        }
+      ]
+    },
+    {
+      "model_id": "marketnet",
+      "model_version": "golden-stub-1",
+      "method": "mean_abs_adjustment_logit",
+      "split": "validation",
+      "features": [
+        {
+          "feature": "dc_logratio_home",
+          "importance": 0.0189127667641611
+        },
+        {
+          "feature": "dc_logratio_away",
+          "importance": 0.018653196678231423
+        },
+        {
+          "feature": "rest_days_diff",
+          "importance": 0.01266194413781737
+        },
+        {
+          "feature": "elo_diff",
+          "importance": 0.009719383368024356
+        },
+        {
+          "feature": "q_draw",
+          "importance": 0.008118000364306568
+        },
+        {
+          "feature": "fav_log_q",
+          "importance": 0.0038901826578168477
+        },
+        {
+          "feature": "league_E0",
+          "importance": 0.0037687736025806863
+        }
+      ]
+    }
+  ]
+}

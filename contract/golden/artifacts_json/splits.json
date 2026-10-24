@@ -1,0 +1,12 @@
+{
+  "contract_version": "1.1.0",
+  "by_season": {
+    "2021-22": "warmup",
+    "2022-23": "train",
+    "2023-24": "calibration",
+    "2024-25": "validation",
+    "2025-26": "holdout"
+  },
+  "holdout_season": "2025-26",
+  "note": "Golden splits. Real splits live in artifacts/splits.json."
+}

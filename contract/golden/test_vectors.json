@@ -1,0 +1,514 @@
+{
+  "contract_version": "1.1.0",
+  "tolerance": 1e-06,
+  "normalise": [
+    {
+      "odds": [
+        2.1,
+        3.4,
+        3.6
+      ],
+      "expected_q": [
+        0.454343,
+        0.280624,
+        0.265033
+      ],
+      "expected_overround": 0.048086
+    },
+    {
+      "odds": [
+        1.5,
+        4.2,
+        7.0
+      ],
+      "expected_q": [
+        0.636364,
+        0.227273,
+        0.136364
+      ],
+      "expected_overround": 0.047619
+    }
+  ],
+  "ev": [
+    {
+      "p": 0.52,
+      "odds": 1.9,
+      "expected_ev": -0.012,
+      "note": "REGRESSION: must be rejected even though margin-free market prob is 0.50"
+    },
+    {
+      "p": 0.55,
+      "odds": 2.0,
+      "expected_ev": 0.1
+    }
+  ],
+  "adverse_price": [
+    {
+      "odds": 2.0,
+      "price_haircut": 0.05,
+      "expected_adjusted_odds": 1.95
+    },
+    {
+      "odds": 3.4,
+      "price_haircut": 0.1,
+      "expected_adjusted_odds": 3.16
+    }
+  ],
+  "stress": [
+    {
+      "p": 0.55,
+      "delta": 0.02,
+      "expected_p_stressed": 0.53
+    },
+    {
+      "p": 0.01,
+      "delta": 0.02,
+      "expected_p_stressed": 0.0
+    }
+  ],
+  "kelly": [
+    {
+      "p": 0.55,
+      "odds": 2.0,
+      "expected_full_kelly": 0.1,
+      "expected_quarter_kelly": 0.025
+    },
+    {
+      "p": 0.52,
+      "odds": 1.9,
+      "expected_full_kelly": 0.0,
+      "expected_quarter_kelly": 0.0
+    }
+  ],
+  "clv": [
+    {
+      "offered_odds": 2.1,
+      "closing_fair_prob": 0.5,
+      "expected_clv": 0.05
+    }
+  ],
+  "brier": [
+    {
+      "p": [
+        0.5,
+        0.3,
+        0.2
+      ],
+      "result": "H",
+      "expected_brier_sum3": 0.38
+    }
+  ],
+  "log_loss": [
+    {
+      "p": [
+        0.5,
+        0.3,
+        0.2
+      ],
+      "result": "D",
+      "expected": 1.203973
+    }
+  ],
+  "decision": [
+    {
+      "probs": [
+        0.5,
+        0.27,
+        0.23
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          2.1,
+          3.4,
+          3.6
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "FAILS_STRESS",
+        "reason_codes_all": [
+          "FAILS_STRESS"
+        ],
+        "best_outcome": "H",
+        "ev_raw": 0.05,
+        "ev_stressed": 0.008,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.47,
+        0.27,
+        0.26
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          2.1,
+          3.4,
+          3.6
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "EV_BELOW_THRESHOLD",
+        "reason_codes_all": [
+          "EV_BELOW_THRESHOLD"
+        ],
+        "best_outcome": "H",
+        "ev_raw": -0.013,
+        "ev_stressed": -0.055,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "BET",
+        "selection": "A",
+        "reason_code": "ACCEPTED",
+        "reason_codes_all": [
+          "ACCEPTED"
+        ],
+        "best_outcome": "A",
+        "ev_raw": 0.176,
+        "ev_stressed": 0.12,
+        "proposed_stake": 10.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.1
+      },
+      "expected": {
+        "action": "BET",
+        "selection": "A",
+        "reason_code": "ACCEPTED",
+        "reason_codes_all": [
+          "ACCEPTED"
+        ],
+        "best_outcome": "A",
+        "ev_raw": 0.1004,
+        "ev_stressed": 0.048,
+        "proposed_stake": 10.0
+      }
+    },
+    {
+      "probs": [
+        0.52,
+        0.28,
+        0.2
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          1.9,
+          3.6,
+          4.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "EV_BELOW_THRESHOLD",
+        "reason_codes_all": [
+          "EV_BELOW_THRESHOLD"
+        ],
+        "best_outcome": "D",
+        "ev_raw": 0.008,
+        "ev_stressed": -0.064,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "UNKNOWN",
+        "observed_at_utc": null
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "STALE_QUOTE",
+        "reason_codes_all": [
+          "STALE_QUOTE"
+        ],
+        "best_outcome": "A",
+        "ev_raw": 0.176,
+        "ev_stressed": 0.12,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": false,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "INVALID_PRICE",
+        "reason_codes_all": [
+          "INVALID_PRICE"
+        ],
+        "best_outcome": null,
+        "ev_raw": null,
+        "ev_stressed": null,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": null,
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "MISSING_PREDICTION",
+        "reason_codes_all": [
+          "MISSING_PREDICTION"
+        ],
+        "best_outcome": null,
+        "ev_raw": null,
+        "ev_stressed": null,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": null,
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "MISSING_QUOTE",
+        "reason_codes_all": [
+          "MISSING_QUOTE"
+        ],
+        "best_outcome": null,
+        "ev_raw": null,
+        "ev_stressed": null,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2024-12-27T07:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0
+      },
+      "expected": {
+        "action": "NO_BET",
+        "selection": null,
+        "reason_code": "STALE_QUOTE",
+        "reason_codes_all": [
+          "STALE_QUOTE"
+        ],
+        "best_outcome": "A",
+        "ev_raw": 0.176,
+        "ev_stressed": 0.12,
+        "proposed_stake": 0.0
+      }
+    },
+    {
+      "probs": [
+        0.3,
+        0.28,
+        0.42
+      ],
+      "quote": {
+        "quote_id": "Qtest",
+        "odds": [
+          3.1,
+          3.5,
+          2.8
+        ],
+        "is_valid": true,
+        "timestamp_precision": "WINDOW",
+        "observed_at_utc": "2025-01-03T14:00:00Z"
+      },
+      "kickoff_utc": "2025-01-04T15:00:00Z",
+      "policy": {
+        "min_ev": 0.02,
+        "prob_stress_delta": 0.02,
+        "price_haircut": 0.0,
+        "staking_mode": "QUARTER_KELLY"
+      },
+      "expected": {
+        "action": "BET",
+        "selection": "A",
+        "reason_code": "ACCEPTED",
+        "reason_codes_all": [
+          "ACCEPTED"
+        ],
+        "best_outcome": "A",
+        "ev_raw": 0.176,
+        "ev_stressed": 0.12,
+        "proposed_stake": 16.666667
+      }
+    }
+  ],
+  "bankroll": {
+    "description": "Flat staking, one batch of 25 accepted bets, bankroll 1000, nothing open before. Stake 1% of INITIAL bankroll = 10 each. Total open exposure cap 20% = 200, so bets are taken in order (ev_stressed desc, then match_id asc) until the cap: first 20 placed, last 5 get EXPOSURE_LIMIT_TOTAL.",
+    "initial_bankroll": 1000.0,
+    "n_accepted": 25,
+    "flat_stake_frac": 0.01,
+    "max_open_exposure_frac": 0.2,
+    "expected_placed": 20,
+    "expected_rejected_total_cap": 5
+  },
+  "quarter_kelly_stake": {
+    "description": "available_bankroll * 0.25 * full_kelly(p_stressed, odds_adjusted), then capped at 2% of available.",
+    "available_bankroll": 1000.0,
+    "p_stressed": 0.53,
+    "odds_adjusted": 2.0,
+    "expected_stake": 15.0,
+    "cap_frac": 0.02
+  }
+}

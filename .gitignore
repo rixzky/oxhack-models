@@ -1,0 +1,9 @@
+artifacts/
+data/raw/
+.env
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+dist/
+.pytest_cache/

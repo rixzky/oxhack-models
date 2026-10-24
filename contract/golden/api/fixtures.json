@@ -1,0 +1,82 @@
+[
+  {
+    "match_id": "E0_2024-25_20240814_alder-fc_juniper-utd",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-14T14:00:00Z",
+    "home_team": "Alder FC",
+    "away_team": "Juniper Utd",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240814_juniper-utd_dunmore",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-14T14:00:00Z",
+    "home_team": "Juniper Utd",
+    "away_team": "Dunmore",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240814_birch-town_granton",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-14T14:00:00Z",
+    "home_team": "Birch Town",
+    "away_team": "Granton",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240815_juniper-utd_irwell",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-15T14:00:00Z",
+    "home_team": "Juniper Utd",
+    "away_team": "Irwell",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240814_alder-fc_irwell",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-14T14:00:00Z",
+    "home_team": "Alder FC",
+    "away_team": "Irwell",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240821_birch-town_dunmore",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-21T14:00:00Z",
+    "home_team": "Birch Town",
+    "away_team": "Dunmore",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240821_juniper-utd_fernley",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-21T14:00:00Z",
+    "home_team": "Juniper Utd",
+    "away_team": "Fernley",
+    "split": "validation",
+    "has_closing": true
+  },
+  {
+    "match_id": "E0_2024-25_20240822_fernley_irwell",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-08-22T14:00:00Z",
+    "home_team": "Fernley",
+    "away_team": "Irwell",
+    "split": "validation",
+    "has_closing": true
+  }
+]

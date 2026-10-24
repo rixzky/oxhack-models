@@ -1,0 +1,26 @@
+{
+  "dataset_mode": "SYNTHETIC",
+  "raw_counts": {
+    "matches": 730,
+    "quotes": 2920
+  },
+  "accepted_counts": {
+    "matches": 730,
+    "quotes": 2914
+  },
+  "invalid_quotes_by_reason": {
+    "MISSING_ODDS": 3,
+    "ODDS_LE_1": 3
+  },
+  "timestamp_precision_counts": {
+    "WINDOW": 2916,
+    "UNKNOWN": 4
+  },
+  "duplicates_removed": 0,
+  "missing_value_counts": {
+    "odds_draw": 3
+  },
+  "flagged_outliers": [],
+  "exclusions": [],
+  "note": "Exclusions are decided without looking at match outcomes."
+}

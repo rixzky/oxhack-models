@@ -1,0 +1,103 @@
+{
+  "dataset_mode": "SYNTHETIC",
+  "is_exploratory": false,
+  "config_hash": "0881e4052cac",
+  "match": {
+    "match_id": "E0_2024-25_20241009_irwell_hollins",
+    "league": "E0",
+    "season": "2024-25",
+    "kickoff_utc": "2024-10-09T14:00:00Z",
+    "home_team": "Irwell",
+    "away_team": "Hollins",
+    "split": "validation"
+  },
+  "information_cutoff_utc": "2024-10-07T00:00:00Z",
+  "offered_quote": {
+    "quote_id": "Q001241",
+    "bookmaker": "PS",
+    "snapshot": "PRE_CLOSING",
+    "observed_at_utc": "2024-10-08T14:00:00Z",
+    "timestamp_precision": "WINDOW",
+    "source": "SYNTHETIC",
+    "odds": [
+      2.03,
+      4.03,
+      3.52
+    ]
+  },
+  "market_probs": [
+    0.480671,
+    0.242124,
+    0.277205
+  ],
+  "model": {
+    "model_id": "lgbm",
+    "model_version": "golden-stub-1",
+    "probs": [
+      0.565396,
+      0.211773,
+      0.222831
+    ]
+  },
+  "per_outcome": [
+    {
+      "outcome": "H",
+      "p_model": 0.565396,
+      "p_stressed": 0.545396,
+      "q_market": 0.480671,
+      "odds_offered": 2.03,
+      "odds_adjusted": 2.03,
+      "ev_raw": 0.147754,
+      "ev_stressed": 0.107154
+    },
+    {
+      "outcome": "D",
+      "p_model": 0.211773,
+      "p_stressed": 0.191773,
+      "q_market": 0.242124,
+      "odds_offered": 4.03,
+      "odds_adjusted": 4.03,
+      "ev_raw": -0.146555,
+      "ev_stressed": -0.227155
+    },
+    {
+      "outcome": "A",
+      "p_model": 0.222831,
+      "p_stressed": 0.202831,
+      "q_market": 0.277205,
+      "odds_offered": 3.52,
+      "odds_adjusted": 3.52,
+      "ev_raw": -0.215636,
+      "ev_stressed": -0.286036
+    }
+  ],
+  "decision": {
+    "action": "BET",
+    "selection": "H",
+    "stake": 10.0,
+    "reason_code": "ACCEPTED",
+    "reason_codes_all": [
+      "ACCEPTED"
+    ],
+    "explanation": "Bet Home at 2.03: expected profit +14.8% per unit, still +10.7% after assuming our probability is 2.0pp too high, above the +2.0% threshold. Stake 10.00 units."
+  },
+  "top_features": [],
+  "config_used": {
+    "min_ev": 0.02,
+    "prob_stress_delta": 0.02,
+    "price_haircut": 0.0,
+    "staking_mode": "FLAT",
+    "flat_stake_frac": 0.01,
+    "kelly_multiplier": 0.25,
+    "max_stake_frac_per_match": 0.02,
+    "max_open_exposure_frac": 0.2,
+    "initial_bankroll": 1000.0,
+    "max_quote_age_hours": 120,
+    "allow_precisions": [
+      "EXACT",
+      "DATE",
+      "WINDOW"
+    ],
+    "league_gate": false
+  }
+}

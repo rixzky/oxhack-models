@@ -1,0 +1,29 @@
+{
+  "contract_version": "1.1.0",
+  "frozen_at_utc": null,
+  "model_id": "lgbm",
+  "model_version": "golden-stub-1",
+  "policy": {
+    "min_ev": 0.02,
+    "prob_stress_delta": 0.02,
+    "price_haircut": 0.0,
+    "staking_mode": "FLAT",
+    "flat_stake_frac": 0.01,
+    "kelly_multiplier": 0.25,
+    "max_stake_frac_per_match": 0.02,
+    "max_open_exposure_frac": 0.2,
+    "initial_bankroll": 1000.0,
+    "max_quote_age_hours": 120,
+    "allow_precisions": [
+      "EXACT",
+      "DATE",
+      "WINDOW"
+    ],
+    "league_gate": false
+  },
+  "chosen_using": [
+    "validation"
+  ],
+  "n_trials_logged": 1,
+  "config_hash": "0881e4052cac"
+}

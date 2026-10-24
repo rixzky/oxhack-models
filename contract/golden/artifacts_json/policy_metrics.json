@@ -1,0 +1,3144 @@
+{
+  "dataset_mode": "SYNTHETIC",
+  "contract_version": "1.1.0",
+  "note": "Golden example. Bankroll curve is the settled bankroll per batch.",
+  "rows": [
+    {
+      "model_id": "elo",
+      "split": "calibration",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 15,
+          "n_abstain": 131,
+          "turnover": 150.0,
+          "profit": -81.9,
+          "roi": -0.546,
+          "max_drawdown": 81.90000000000009,
+          "mean_clv": -0.011659752273086636,
+          "sharpe_per_matchweek": -0.620854074449119,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "EV_BELOW_THRESHOLD": 69,
+            "FAILS_STRESS": 62,
+            "ACCEPTED": 15
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -1.0,
+              0.024666666666666733
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 117,
+          "n_abstain": 29,
+          "turnover": 1170.0,
+          "profit": -281.5,
+          "roi": -0.2405982905982906,
+          "max_drawdown": 281.4999999999998,
+          "mean_clv": -0.02622508625577861,
+          "sharpe_per_matchweek": -0.3212028527015092,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 117,
+            "EV_BELOW_THRESHOLD": 29
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.4957672737955346,
+              0.033510570402871795
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2023-W33",
+          "time_utc": "2023-08-13T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "D1_2023-W35",
+          "time_utc": "2023-08-27T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 980.0,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "D1_2023-W36",
+          "time_utc": "2023-09-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 960.0,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "E0_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 950.0,
+          "drawdown": 50.0
+        },
+        {
+          "batch_key": "E0_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 972.8,
+          "drawdown": 27.2
+        },
+        {
+          "batch_key": "E0_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 962.8,
+          "drawdown": 37.2
+        },
+        {
+          "batch_key": "D1_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 952.8,
+          "drawdown": 47.2
+        },
+        {
+          "batch_key": "E0_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 958.1,
+          "drawdown": 41.9
+        },
+        {
+          "batch_key": "E0_2023-W47",
+          "time_utc": "2023-11-18T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 948.1,
+          "drawdown": 51.9
+        },
+        {
+          "batch_key": "E0_2023-W48",
+          "time_utc": "2023-11-25T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 928.1,
+          "drawdown": 71.9
+        },
+        {
+          "batch_key": "E0_2023-W49",
+          "time_utc": "2023-12-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 918.1,
+          "drawdown": 81.9
+        },
+        {
+          "batch_key": "D1_2023-W33",
+          "time_utc": "2023-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 979.6,
+          "drawdown": 20.4
+        },
+        {
+          "batch_key": "E0_2023-W33",
+          "time_utc": "2023-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 982.2,
+          "drawdown": 17.8
+        },
+        {
+          "batch_key": "E0_2023-W34",
+          "time_utc": "2023-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 942.2,
+          "drawdown": 57.8
+        },
+        {
+          "batch_key": "D1_2023-W34",
+          "time_utc": "2023-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 902.2,
+          "drawdown": 97.8
+        },
+        {
+          "batch_key": "D1_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 872.2,
+          "drawdown": 127.8
+        },
+        {
+          "batch_key": "E0_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 906.8,
+          "drawdown": 93.2
+        },
+        {
+          "batch_key": "D1_2023-W36",
+          "time_utc": "2023-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 876.8,
+          "drawdown": 123.2
+        },
+        {
+          "batch_key": "E0_2023-W36",
+          "time_utc": "2023-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 846.8,
+          "drawdown": 153.2
+        },
+        {
+          "batch_key": "E0_2023-W37",
+          "time_utc": "2023-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 838.0,
+          "drawdown": 162.0
+        },
+        {
+          "batch_key": "D1_2023-W37",
+          "time_utc": "2023-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 837.7,
+          "drawdown": 162.3
+        },
+        {
+          "batch_key": "E0_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 797.7,
+          "drawdown": 202.3
+        },
+        {
+          "batch_key": "D1_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 813.1,
+          "drawdown": 186.9
+        },
+        {
+          "batch_key": "E0_2023-W39",
+          "time_utc": "2023-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 879.5,
+          "drawdown": 120.5
+        },
+        {
+          "batch_key": "D1_2023-W39",
+          "time_utc": "2023-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 869.1,
+          "drawdown": 130.9
+        },
+        {
+          "batch_key": "E0_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 880.7,
+          "drawdown": 119.3
+        },
+        {
+          "batch_key": "D1_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 850.7,
+          "drawdown": 149.3
+        },
+        {
+          "batch_key": "E0_2023-W41",
+          "time_utc": "2023-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 868.0,
+          "drawdown": 132.0
+        },
+        {
+          "batch_key": "D1_2023-W41",
+          "time_utc": "2023-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 852.5,
+          "drawdown": 147.5
+        },
+        {
+          "batch_key": "D1_2023-W42",
+          "time_utc": "2023-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 841.1,
+          "drawdown": 158.9
+        },
+        {
+          "batch_key": "E0_2023-W42",
+          "time_utc": "2023-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 791.1,
+          "drawdown": 208.9
+        },
+        {
+          "batch_key": "D1_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 821.8,
+          "drawdown": 178.2
+        },
+        {
+          "batch_key": "E0_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 781.8,
+          "drawdown": 218.2
+        },
+        {
+          "batch_key": "D1_2023-W44",
+          "time_utc": "2023-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 796.2,
+          "drawdown": 203.8
+        },
+        {
+          "batch_key": "E0_2023-W44",
+          "time_utc": "2023-10-29T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 776.2,
+          "drawdown": 223.8
+        },
+        {
+          "batch_key": "D1_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 781.8,
+          "drawdown": 218.2
+        },
+        {
+          "batch_key": "E0_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 757.1,
+          "drawdown": 242.9
+        },
+        {
+          "batch_key": "D1_2023-W46",
+          "time_utc": "2023-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 739.8,
+          "drawdown": 260.2
+        },
+        {
+          "batch_key": "E0_2023-W46",
+          "time_utc": "2023-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 768.1,
+          "drawdown": 231.9
+        },
+        {
+          "batch_key": "E0_2023-W47",
+          "time_utc": "2023-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 789.8,
+          "drawdown": 210.2
+        },
+        {
+          "batch_key": "E0_2023-W48",
+          "time_utc": "2023-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 781.9,
+          "drawdown": 218.1
+        },
+        {
+          "batch_key": "E0_2023-W49",
+          "time_utc": "2023-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 758.5,
+          "drawdown": 241.5
+        },
+        {
+          "batch_key": "E0_2023-W50",
+          "time_utc": "2023-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 718.5,
+          "drawdown": 281.5
+        }
+      ]
+    },
+    {
+      "model_id": "elo",
+      "split": "holdout",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 23,
+          "n_abstain": 123,
+          "turnover": 230.0,
+          "profit": -78.39999999999999,
+          "roi": -0.34086956521739126,
+          "max_drawdown": 78.39999999999986,
+          "mean_clv": -0.01814059009507623,
+          "sharpe_per_matchweek": -0.35349547685883304,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 62,
+            "EV_BELOW_THRESHOLD": 60,
+            "ACCEPTED": 23,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.7343333333333334,
+              0.0900217391304347
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 122,
+          "n_abstain": 24,
+          "turnover": 1220.0,
+          "profit": 154.70000000000002,
+          "roi": 0.12680327868852462,
+          "max_drawdown": 104.09999999999991,
+          "mean_clv": -0.017736948510633486,
+          "sharpe_per_matchweek": 0.18301270904134065,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 122,
+            "EV_BELOW_THRESHOLD": 24
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.11000800000000005,
+              0.3887276929541949
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2025-W33",
+          "time_utc": "2025-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 997.7,
+          "drawdown": 2.3
+        },
+        {
+          "batch_key": "E0_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 977.7,
+          "drawdown": 22.3
+        },
+        {
+          "batch_key": "D1_2025-W37",
+          "time_utc": "2025-09-10T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 967.7,
+          "drawdown": 32.3
+        },
+        {
+          "batch_key": "D1_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 975.4,
+          "drawdown": 24.6
+        },
+        {
+          "batch_key": "E0_2025-W38",
+          "time_utc": "2025-09-17T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 965.4,
+          "drawdown": 34.6
+        },
+        {
+          "batch_key": "D1_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 955.4,
+          "drawdown": 44.6
+        },
+        {
+          "batch_key": "E0_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 945.4,
+          "drawdown": 54.6
+        },
+        {
+          "batch_key": "E0_2025-W40",
+          "time_utc": "2025-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 951.2,
+          "drawdown": 48.8
+        },
+        {
+          "batch_key": "E0_2025-W41",
+          "time_utc": "2025-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 975.9,
+          "drawdown": 24.1
+        },
+        {
+          "batch_key": "E0_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 965.9,
+          "drawdown": 34.1
+        },
+        {
+          "batch_key": "D1_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 973.5,
+          "drawdown": 26.5
+        },
+        {
+          "batch_key": "E0_2025-W43",
+          "time_utc": "2025-10-22T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 963.5,
+          "drawdown": 36.5
+        },
+        {
+          "batch_key": "D1_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 953.5,
+          "drawdown": 46.5
+        },
+        {
+          "batch_key": "E0_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 943.5,
+          "drawdown": 56.5
+        },
+        {
+          "batch_key": "D1_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 955.4,
+          "drawdown": 44.6
+        },
+        {
+          "batch_key": "E0_2025-W47",
+          "time_utc": "2025-11-18T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 945.4,
+          "drawdown": 54.6
+        },
+        {
+          "batch_key": "E0_2025-W49",
+          "time_utc": "2025-12-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 925.4,
+          "drawdown": 74.6
+        },
+        {
+          "batch_key": "E0_2025-W50",
+          "time_utc": "2025-12-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 921.6,
+          "drawdown": 78.4
+        },
+        {
+          "batch_key": "E0_2025-W33",
+          "time_utc": "2025-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1006.9,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2025-W34",
+          "time_utc": "2025-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1001.4,
+          "drawdown": 5.5
+        },
+        {
+          "batch_key": "E0_2025-W34",
+          "time_utc": "2025-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 997.5,
+          "drawdown": 9.4
+        },
+        {
+          "batch_key": "E0_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 998.2,
+          "drawdown": 8.7
+        },
+        {
+          "batch_key": "D1_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1032.7,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W36",
+          "time_utc": "2025-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1057.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2025-W36",
+          "time_utc": "2025-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1075.2,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1041.1,
+          "drawdown": 34.1
+        },
+        {
+          "batch_key": "D1_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1001.1,
+          "drawdown": 74.1
+        },
+        {
+          "batch_key": "E0_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 971.1,
+          "drawdown": 104.1
+        },
+        {
+          "batch_key": "D1_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 978.3,
+          "drawdown": 96.9
+        },
+        {
+          "batch_key": "D1_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 981.7,
+          "drawdown": 93.5
+        },
+        {
+          "batch_key": "E0_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 974.4,
+          "drawdown": 100.8
+        },
+        {
+          "batch_key": "E0_2025-W40",
+          "time_utc": "2025-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 985.3,
+          "drawdown": 89.9
+        },
+        {
+          "batch_key": "D1_2025-W40",
+          "time_utc": "2025-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1072.3,
+          "drawdown": 2.9
+        },
+        {
+          "batch_key": "D1_2025-W41",
+          "time_utc": "2025-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1049.3,
+          "drawdown": 25.9
+        },
+        {
+          "batch_key": "E0_2025-W41",
+          "time_utc": "2025-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1069.3,
+          "drawdown": 5.9
+        },
+        {
+          "batch_key": "D1_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1061.4,
+          "drawdown": 13.8
+        },
+        {
+          "batch_key": "E0_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1067.3,
+          "drawdown": 7.9
+        },
+        {
+          "batch_key": "D1_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1124.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1125.6,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W44",
+          "time_utc": "2025-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1130.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2025-W44",
+          "time_utc": "2025-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1145.8,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1145.8,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1131.4,
+          "drawdown": 14.4
+        },
+        {
+          "batch_key": "D1_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1162.7,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1112.7,
+          "drawdown": 50.0
+        },
+        {
+          "batch_key": "E0_2025-W47",
+          "time_utc": "2025-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1109.8,
+          "drawdown": 52.9
+        },
+        {
+          "batch_key": "E0_2025-W48",
+          "time_utc": "2025-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1142.7,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "E0_2025-W49",
+          "time_utc": "2025-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1153.3,
+          "drawdown": 9.4
+        },
+        {
+          "batch_key": "E0_2025-W50",
+          "time_utc": "2025-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1154.7,
+          "drawdown": 8.0
+        }
+      ]
+    },
+    {
+      "model_id": "elo",
+      "split": "train",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 17,
+          "n_abstain": 129,
+          "turnover": 170.0,
+          "profit": -63.1,
+          "roi": -0.37117647058823533,
+          "max_drawdown": 64.10000000000002,
+          "mean_clv": -0.022374263583636804,
+          "sharpe_per_matchweek": -0.4497303531482182,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 74,
+            "EV_BELOW_THRESHOLD": 54,
+            "ACCEPTED": 17,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.85375,
+              0.08600000000000005
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 123,
+          "n_abstain": 23,
+          "turnover": 1230.0,
+          "profit": 4.300000000000015,
+          "roi": 0.0034959349593496054,
+          "max_drawdown": 126.69999999999982,
+          "mean_clv": -0.027220989761675158,
+          "sharpe_per_matchweek": 0.005270753765995873,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 123,
+            "EV_BELOW_THRESHOLD": 23
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.19878643303261623,
+              0.2470198412698411
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "D1_2022-W33",
+          "time_utc": "2022-08-13T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 970.0,
+          "drawdown": 30.0
+        },
+        {
+          "batch_key": "D1_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 972.5,
+          "drawdown": 27.5
+        },
+        {
+          "batch_key": "E0_2022-W36",
+          "time_utc": "2022-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 962.5,
+          "drawdown": 37.5
+        },
+        {
+          "batch_key": "E0_2022-W38",
+          "time_utc": "2022-09-17T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 952.5,
+          "drawdown": 47.5
+        },
+        {
+          "batch_key": "D1_2022-W39",
+          "time_utc": "2022-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 942.5,
+          "drawdown": 57.5
+        },
+        {
+          "batch_key": "E0_2022-W40",
+          "time_utc": "2022-10-01T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 945.9,
+          "drawdown": 54.1
+        },
+        {
+          "batch_key": "D1_2022-W40",
+          "time_utc": "2022-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 935.9,
+          "drawdown": 64.1
+        },
+        {
+          "batch_key": "E0_2022-W41",
+          "time_utc": "2022-10-08T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 949.7,
+          "drawdown": 50.3
+        },
+        {
+          "batch_key": "D1_2022-W41",
+          "time_utc": "2022-10-14T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 939.7,
+          "drawdown": 60.3
+        },
+        {
+          "batch_key": "E0_2022-W42",
+          "time_utc": "2022-10-15T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 956.9,
+          "drawdown": 43.1
+        },
+        {
+          "batch_key": "D1_2022-W44",
+          "time_utc": "2022-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 946.9,
+          "drawdown": 53.1
+        },
+        {
+          "batch_key": "E0_2022-W47",
+          "time_utc": "2022-11-25T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 936.9,
+          "drawdown": 63.1
+        },
+        {
+          "batch_key": "D1_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 984.5,
+          "drawdown": 15.5
+        },
+        {
+          "batch_key": "E0_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 987.1,
+          "drawdown": 12.9
+        },
+        {
+          "batch_key": "D1_2022-W33",
+          "time_utc": "2022-08-13T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1004.5,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2022-W33",
+          "time_utc": "2022-08-13T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 982.5,
+          "drawdown": 22.0
+        },
+        {
+          "batch_key": "E0_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 982.7,
+          "drawdown": 21.8
+        },
+        {
+          "batch_key": "D1_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 965.2,
+          "drawdown": 39.3
+        },
+        {
+          "batch_key": "E0_2022-W35",
+          "time_utc": "2022-08-27T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 986.7,
+          "drawdown": 17.8
+        },
+        {
+          "batch_key": "D1_2022-W35",
+          "time_utc": "2022-08-27T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 971.9,
+          "drawdown": 32.6
+        },
+        {
+          "batch_key": "E0_2022-W36",
+          "time_utc": "2022-09-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 966.8,
+          "drawdown": 37.7
+        },
+        {
+          "batch_key": "D1_2022-W36",
+          "time_utc": "2022-09-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 961.0,
+          "drawdown": 43.5
+        },
+        {
+          "batch_key": "E0_2022-W37",
+          "time_utc": "2022-09-10T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 966.6,
+          "drawdown": 37.9
+        },
+        {
+          "batch_key": "D1_2022-W37",
+          "time_utc": "2022-09-10T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 984.1,
+          "drawdown": 20.4
+        },
+        {
+          "batch_key": "D1_2022-W38",
+          "time_utc": "2022-09-17T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 964.1,
+          "drawdown": 40.4
+        },
+        {
+          "batch_key": "E0_2022-W38",
+          "time_utc": "2022-09-17T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 963.7,
+          "drawdown": 40.8
+        },
+        {
+          "batch_key": "D1_2022-W39",
+          "time_utc": "2022-09-24T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 923.7,
+          "drawdown": 80.8
+        },
+        {
+          "batch_key": "E0_2022-W39",
+          "time_utc": "2022-09-24T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 916.7,
+          "drawdown": 87.8
+        },
+        {
+          "batch_key": "E0_2022-W40",
+          "time_utc": "2022-10-01T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 897.8,
+          "drawdown": 106.7
+        },
+        {
+          "batch_key": "D1_2022-W40",
+          "time_utc": "2022-10-01T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 895.0,
+          "drawdown": 109.5
+        },
+        {
+          "batch_key": "E0_2022-W41",
+          "time_utc": "2022-10-08T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 884.9,
+          "drawdown": 119.6
+        },
+        {
+          "batch_key": "D1_2022-W41",
+          "time_utc": "2022-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 877.8,
+          "drawdown": 126.7
+        },
+        {
+          "batch_key": "E0_2022-W42",
+          "time_utc": "2022-10-15T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 885.0,
+          "drawdown": 119.5
+        },
+        {
+          "batch_key": "D1_2022-W42",
+          "time_utc": "2022-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 914.9,
+          "drawdown": 89.6
+        },
+        {
+          "batch_key": "E0_2022-W43",
+          "time_utc": "2022-10-22T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 915.0,
+          "drawdown": 89.5
+        },
+        {
+          "batch_key": "D1_2022-W43",
+          "time_utc": "2022-10-22T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 906.8,
+          "drawdown": 97.7
+        },
+        {
+          "batch_key": "E0_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1019.3,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1017.1,
+          "drawdown": 2.2
+        },
+        {
+          "batch_key": "D1_2022-W45",
+          "time_utc": "2022-11-05T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1020.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2022-W45",
+          "time_utc": "2022-11-05T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1032.3,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2022-W46",
+          "time_utc": "2022-11-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1012.1,
+          "drawdown": 20.2
+        },
+        {
+          "batch_key": "E0_2022-W47",
+          "time_utc": "2022-11-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1021.6,
+          "drawdown": 10.7
+        },
+        {
+          "batch_key": "E0_2022-W48",
+          "time_utc": "2022-11-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1010.4,
+          "drawdown": 21.9
+        },
+        {
+          "batch_key": "E0_2022-W49",
+          "time_utc": "2022-12-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1014.3,
+          "drawdown": 18.0
+        },
+        {
+          "batch_key": "E0_2022-W50",
+          "time_utc": "2022-12-10T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1004.3,
+          "drawdown": 28.0
+        }
+      ]
+    },
+    {
+      "model_id": "elo",
+      "split": "validation",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 20,
+          "n_abstain": 126,
+          "turnover": 200.0,
+          "profit": -113.1,
+          "roi": -0.5655,
+          "max_drawdown": 130.0,
+          "mean_clv": -0.026306719215072404,
+          "sharpe_per_matchweek": -0.5622041513162843,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 68,
+            "EV_BELOW_THRESHOLD": 57,
+            "ACCEPTED": 20,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -1.0,
+              -0.03444444444444444
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 117,
+          "n_abstain": 29,
+          "turnover": 1170.0,
+          "profit": -251.80000000000007,
+          "roi": -0.21521367521367527,
+          "max_drawdown": 330.70000000000005,
+          "mean_clv": -0.01853794159928369,
+          "sharpe_per_matchweek": -0.29722656618643273,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 117,
+            "EV_BELOW_THRESHOLD": 29
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.4746104770642201,
+              0.02710834146341443
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2024-W33",
+          "time_utc": "2024-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2024-W35",
+          "time_utc": "2024-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 980.0,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "D1_2024-W36",
+          "time_utc": "2024-09-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 960.0,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "E0_2024-W36",
+          "time_utc": "2024-09-03T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 950.0,
+          "drawdown": 50.0
+        },
+        {
+          "batch_key": "D1_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 930.0,
+          "drawdown": 70.0
+        },
+        {
+          "batch_key": "E0_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 920.0,
+          "drawdown": 80.0
+        },
+        {
+          "batch_key": "E0_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 900.0,
+          "drawdown": 100.0
+        },
+        {
+          "batch_key": "D1_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 890.0,
+          "drawdown": 110.0
+        },
+        {
+          "batch_key": "E0_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 870.0,
+          "drawdown": 130.0
+        },
+        {
+          "batch_key": "E0_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 897.1,
+          "drawdown": 102.9
+        },
+        {
+          "batch_key": "D1_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 902.5,
+          "drawdown": 97.5
+        },
+        {
+          "batch_key": "D1_2024-W44",
+          "time_utc": "2024-10-29T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 892.5,
+          "drawdown": 107.5
+        },
+        {
+          "batch_key": "E0_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 882.5,
+          "drawdown": 117.5
+        },
+        {
+          "batch_key": "E0_2024-W47",
+          "time_utc": "2024-11-18T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 896.9,
+          "drawdown": 103.1
+        },
+        {
+          "batch_key": "E0_2024-W49",
+          "time_utc": "2024-12-03T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 886.9,
+          "drawdown": 113.1
+        },
+        {
+          "batch_key": "D1_2024-W33",
+          "time_utc": "2024-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 980.0,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "E0_2024-W33",
+          "time_utc": "2024-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 930.0,
+          "drawdown": 70.0
+        },
+        {
+          "batch_key": "E0_2024-W34",
+          "time_utc": "2024-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 910.0,
+          "drawdown": 90.0
+        },
+        {
+          "batch_key": "D1_2024-W34",
+          "time_utc": "2024-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 890.0,
+          "drawdown": 110.0
+        },
+        {
+          "batch_key": "D1_2024-W35",
+          "time_utc": "2024-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 870.0,
+          "drawdown": 130.0
+        },
+        {
+          "batch_key": "E0_2024-W35",
+          "time_utc": "2024-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 830.0,
+          "drawdown": 170.0
+        },
+        {
+          "batch_key": "D1_2024-W36",
+          "time_utc": "2024-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 806.0,
+          "drawdown": 194.0
+        },
+        {
+          "batch_key": "E0_2024-W36",
+          "time_utc": "2024-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 851.5,
+          "drawdown": 148.5
+        },
+        {
+          "batch_key": "E0_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 850.4,
+          "drawdown": 149.6
+        },
+        {
+          "batch_key": "D1_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 862.8,
+          "drawdown": 137.2
+        },
+        {
+          "batch_key": "E0_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 891.2,
+          "drawdown": 108.8
+        },
+        {
+          "batch_key": "D1_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 929.7,
+          "drawdown": 70.3
+        },
+        {
+          "batch_key": "E0_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 906.4,
+          "drawdown": 93.6
+        },
+        {
+          "batch_key": "D1_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 876.4,
+          "drawdown": 123.6
+        },
+        {
+          "batch_key": "E0_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 836.4,
+          "drawdown": 163.6
+        },
+        {
+          "batch_key": "D1_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 796.4,
+          "drawdown": 203.6
+        },
+        {
+          "batch_key": "E0_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 803.8,
+          "drawdown": 196.2
+        },
+        {
+          "batch_key": "D1_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 773.8,
+          "drawdown": 226.2
+        },
+        {
+          "batch_key": "D1_2024-W42",
+          "time_utc": "2024-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 743.8,
+          "drawdown": 256.2
+        },
+        {
+          "batch_key": "E0_2024-W42",
+          "time_utc": "2024-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 713.8,
+          "drawdown": 286.2
+        },
+        {
+          "batch_key": "D1_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 699.2,
+          "drawdown": 300.8
+        },
+        {
+          "batch_key": "E0_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 682.1,
+          "drawdown": 317.9
+        },
+        {
+          "batch_key": "D1_2024-W44",
+          "time_utc": "2024-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 669.3,
+          "drawdown": 330.7
+        },
+        {
+          "batch_key": "E0_2024-W44",
+          "time_utc": "2024-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 679.3,
+          "drawdown": 320.7
+        },
+        {
+          "batch_key": "D1_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 705.9,
+          "drawdown": 294.1
+        },
+        {
+          "batch_key": "E0_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 720.9,
+          "drawdown": 279.1
+        },
+        {
+          "batch_key": "D1_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 720.8,
+          "drawdown": 279.2
+        },
+        {
+          "batch_key": "E0_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 745.7,
+          "drawdown": 254.3
+        },
+        {
+          "batch_key": "E0_2024-W47",
+          "time_utc": "2024-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 781.6,
+          "drawdown": 218.4
+        },
+        {
+          "batch_key": "E0_2024-W48",
+          "time_utc": "2024-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 741.6,
+          "drawdown": 258.4
+        },
+        {
+          "batch_key": "E0_2024-W49",
+          "time_utc": "2024-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 732.9,
+          "drawdown": 267.1
+        },
+        {
+          "batch_key": "E0_2024-W50",
+          "time_utc": "2024-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 748.2,
+          "drawdown": 251.8
+        }
+      ]
+    },
+    {
+      "model_id": "lgbm",
+      "split": "calibration",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 23,
+          "n_abstain": 123,
+          "turnover": 230.0,
+          "profit": 8.600000000000009,
+          "roi": 0.03739130434782612,
+          "max_drawdown": 52.09999999999991,
+          "mean_clv": -0.018557474513742938,
+          "sharpe_per_matchweek": 0.026993131259658472,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 65,
+            "EV_BELOW_THRESHOLD": 58,
+            "ACCEPTED": 23
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.6268181818181818,
+              0.7566764705882353
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 113,
+          "n_abstain": 33,
+          "turnover": 1130.0,
+          "profit": 156.4,
+          "roi": 0.1384070796460177,
+          "max_drawdown": 131.19999999999982,
+          "mean_clv": -0.02410068092900783,
+          "sharpe_per_matchweek": 0.12863296937796012,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 113,
+            "EV_BELOW_THRESHOLD": 33
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.21077213937918438,
+              0.5286070652173906
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2023-W33",
+          "time_utc": "2023-08-13T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "D1_2023-W34",
+          "time_utc": "2023-08-19T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 980.0,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "D1_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1009.1,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 999.1,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "D1_2023-W37",
+          "time_utc": "2023-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1004.2,
+          "drawdown": 4.9
+        },
+        {
+          "batch_key": "E0_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1028.8,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1026.7,
+          "drawdown": 2.1
+        },
+        {
+          "batch_key": "E0_2023-W42",
+          "time_utc": "2023-10-14T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1006.7,
+          "drawdown": 22.1
+        },
+        {
+          "batch_key": "E0_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 996.7,
+          "drawdown": 32.1
+        },
+        {
+          "batch_key": "D1_2023-W45",
+          "time_utc": "2023-11-05T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 986.7,
+          "drawdown": 42.1
+        },
+        {
+          "batch_key": "E0_2023-W45",
+          "time_utc": "2023-11-05T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 976.7,
+          "drawdown": 52.1
+        },
+        {
+          "batch_key": "D1_2023-W46",
+          "time_utc": "2023-11-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1036.5,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W47",
+          "time_utc": "2023-11-18T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1026.5,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2023-W48",
+          "time_utc": "2023-11-25T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1018.6,
+          "drawdown": 17.9
+        },
+        {
+          "batch_key": "E0_2023-W50",
+          "time_utc": "2023-12-10T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1008.6,
+          "drawdown": 27.9
+        },
+        {
+          "batch_key": "D1_2023-W33",
+          "time_utc": "2023-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1034.8,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W33",
+          "time_utc": "2023-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 994.8,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "E0_2023-W34",
+          "time_utc": "2023-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1015.0,
+          "drawdown": 19.8
+        },
+        {
+          "batch_key": "D1_2023-W34",
+          "time_utc": "2023-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 985.0,
+          "drawdown": 49.8
+        },
+        {
+          "batch_key": "D1_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1004.1,
+          "drawdown": 30.7
+        },
+        {
+          "batch_key": "E0_2023-W35",
+          "time_utc": "2023-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1001.7,
+          "drawdown": 33.1
+        },
+        {
+          "batch_key": "D1_2023-W36",
+          "time_utc": "2023-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1005.9,
+          "drawdown": 28.9
+        },
+        {
+          "batch_key": "E0_2023-W36",
+          "time_utc": "2023-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 985.9,
+          "drawdown": 48.9
+        },
+        {
+          "batch_key": "E0_2023-W37",
+          "time_utc": "2023-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 980.6,
+          "drawdown": 54.2
+        },
+        {
+          "batch_key": "D1_2023-W37",
+          "time_utc": "2023-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 995.4,
+          "drawdown": 39.4
+        },
+        {
+          "batch_key": "E0_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1033.0,
+          "drawdown": 1.8
+        },
+        {
+          "batch_key": "D1_2023-W38",
+          "time_utc": "2023-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1023.0,
+          "drawdown": 11.8
+        },
+        {
+          "batch_key": "E0_2023-W39",
+          "time_utc": "2023-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1054.2,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2023-W39",
+          "time_utc": "2023-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1163.4,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1150.1,
+          "drawdown": 13.3
+        },
+        {
+          "batch_key": "D1_2023-W40",
+          "time_utc": "2023-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1110.1,
+          "drawdown": 53.3
+        },
+        {
+          "batch_key": "E0_2023-W41",
+          "time_utc": "2023-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1101.0,
+          "drawdown": 62.4
+        },
+        {
+          "batch_key": "D1_2023-W41",
+          "time_utc": "2023-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1086.7,
+          "drawdown": 76.7
+        },
+        {
+          "batch_key": "D1_2023-W42",
+          "time_utc": "2023-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1091.5,
+          "drawdown": 71.9
+        },
+        {
+          "batch_key": "E0_2023-W42",
+          "time_utc": "2023-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1062.2,
+          "drawdown": 101.2
+        },
+        {
+          "batch_key": "D1_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1032.2,
+          "drawdown": 131.2
+        },
+        {
+          "batch_key": "E0_2023-W43",
+          "time_utc": "2023-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1072.7,
+          "drawdown": 90.7
+        },
+        {
+          "batch_key": "D1_2023-W44",
+          "time_utc": "2023-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1092.3,
+          "drawdown": 71.1
+        },
+        {
+          "batch_key": "E0_2023-W44",
+          "time_utc": "2023-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1082.4,
+          "drawdown": 81.0
+        },
+        {
+          "batch_key": "D1_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1072.1,
+          "drawdown": 91.3
+        },
+        {
+          "batch_key": "E0_2023-W45",
+          "time_utc": "2023-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1042.1,
+          "drawdown": 121.3
+        },
+        {
+          "batch_key": "D1_2023-W46",
+          "time_utc": "2023-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1087.9,
+          "drawdown": 75.5
+        },
+        {
+          "batch_key": "E0_2023-W46",
+          "time_utc": "2023-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1212.3,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2023-W47",
+          "time_utc": "2023-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1179.8,
+          "drawdown": 32.5
+        },
+        {
+          "batch_key": "E0_2023-W48",
+          "time_utc": "2023-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1161.9,
+          "drawdown": 50.4
+        },
+        {
+          "batch_key": "E0_2023-W49",
+          "time_utc": "2023-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1161.7,
+          "drawdown": 50.6
+        },
+        {
+          "batch_key": "E0_2023-W50",
+          "time_utc": "2023-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1156.4,
+          "drawdown": 55.9
+        }
+      ]
+    },
+    {
+      "model_id": "lgbm",
+      "split": "holdout",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 24,
+          "n_abstain": 122,
+          "turnover": 240.0,
+          "profit": -136.4,
+          "roi": -0.5683333333333334,
+          "max_drawdown": 156.10000000000002,
+          "mean_clv": -0.02933851539424028,
+          "sharpe_per_matchweek": -0.7304064534602441,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 68,
+            "EV_BELOW_THRESHOLD": 53,
+            "ACCEPTED": 24,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.8675025,
+              -0.18598043478260884
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 121,
+          "n_abstain": 25,
+          "turnover": 1210.0,
+          "profit": -108.79999999999998,
+          "roi": -0.0899173553719008,
+          "max_drawdown": 173.79999999999995,
+          "mean_clv": -0.025976014514372727,
+          "sharpe_per_matchweek": -0.13894522817685487,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 121,
+            "EV_BELOW_THRESHOLD": 25
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.3079394845585037,
+              0.13953881578947347
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2025-W33",
+          "time_utc": "2025-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2025-W34",
+          "time_utc": "2025-08-19T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 970.0,
+          "drawdown": 30.0
+        },
+        {
+          "batch_key": "E0_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 960.0,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "D1_2025-W36",
+          "time_utc": "2025-09-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 940.0,
+          "drawdown": 60.0
+        },
+        {
+          "batch_key": "E0_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 930.0,
+          "drawdown": 70.0
+        },
+        {
+          "batch_key": "E0_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 910.0,
+          "drawdown": 90.0
+        },
+        {
+          "batch_key": "E0_2025-W40",
+          "time_utc": "2025-10-01T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 900.0,
+          "drawdown": 100.0
+        },
+        {
+          "batch_key": "E0_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 890.0,
+          "drawdown": 110.0
+        },
+        {
+          "batch_key": "D1_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 891.8,
+          "drawdown": 108.2
+        },
+        {
+          "batch_key": "E0_2025-W44",
+          "time_utc": "2025-10-28T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 881.8,
+          "drawdown": 118.2
+        },
+        {
+          "batch_key": "E0_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 888.5,
+          "drawdown": 111.5
+        },
+        {
+          "batch_key": "E0_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 878.5,
+          "drawdown": 121.5
+        },
+        {
+          "batch_key": "D1_2025-W46",
+          "time_utc": "2025-11-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 868.5,
+          "drawdown": 131.5
+        },
+        {
+          "batch_key": "E0_2025-W47",
+          "time_utc": "2025-11-18T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 848.5,
+          "drawdown": 151.5
+        },
+        {
+          "batch_key": "E0_2025-W48",
+          "time_utc": "2025-11-25T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 843.9,
+          "drawdown": 156.1
+        },
+        {
+          "batch_key": "E0_2025-W49",
+          "time_utc": "2025-12-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 867.2,
+          "drawdown": 132.8
+        },
+        {
+          "batch_key": "E0_2025-W50",
+          "time_utc": "2025-12-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 863.6,
+          "drawdown": 136.4
+        },
+        {
+          "batch_key": "D1_2025-W33",
+          "time_utc": "2025-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 995.0,
+          "drawdown": 5.0
+        },
+        {
+          "batch_key": "E0_2025-W33",
+          "time_utc": "2025-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 979.3,
+          "drawdown": 20.7
+        },
+        {
+          "batch_key": "E0_2025-W34",
+          "time_utc": "2025-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 980.7,
+          "drawdown": 19.3
+        },
+        {
+          "batch_key": "D1_2025-W34",
+          "time_utc": "2025-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 950.7,
+          "drawdown": 49.3
+        },
+        {
+          "batch_key": "D1_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 997.2,
+          "drawdown": 2.8
+        },
+        {
+          "batch_key": "E0_2025-W35",
+          "time_utc": "2025-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 995.2,
+          "drawdown": 4.8
+        },
+        {
+          "batch_key": "D1_2025-W36",
+          "time_utc": "2025-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1060.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2025-W36",
+          "time_utc": "2025-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1010.0,
+          "drawdown": 50.0
+        },
+        {
+          "batch_key": "E0_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1018.0,
+          "drawdown": 42.0
+        },
+        {
+          "batch_key": "D1_2025-W37",
+          "time_utc": "2025-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1035.4,
+          "drawdown": 24.6
+        },
+        {
+          "batch_key": "E0_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1022.9,
+          "drawdown": 37.1
+        },
+        {
+          "batch_key": "D1_2025-W38",
+          "time_utc": "2025-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 982.9,
+          "drawdown": 77.1
+        },
+        {
+          "batch_key": "E0_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 962.9,
+          "drawdown": 97.1
+        },
+        {
+          "batch_key": "D1_2025-W39",
+          "time_utc": "2025-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 971.8,
+          "drawdown": 88.2
+        },
+        {
+          "batch_key": "E0_2025-W40",
+          "time_utc": "2025-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 939.4,
+          "drawdown": 120.6
+        },
+        {
+          "batch_key": "D1_2025-W40",
+          "time_utc": "2025-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 948.3,
+          "drawdown": 111.7
+        },
+        {
+          "batch_key": "E0_2025-W41",
+          "time_utc": "2025-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 968.3,
+          "drawdown": 91.7
+        },
+        {
+          "batch_key": "D1_2025-W41",
+          "time_utc": "2025-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 938.3,
+          "drawdown": 121.7
+        },
+        {
+          "batch_key": "D1_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 942.9,
+          "drawdown": 117.1
+        },
+        {
+          "batch_key": "E0_2025-W42",
+          "time_utc": "2025-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 910.6,
+          "drawdown": 149.4
+        },
+        {
+          "batch_key": "D1_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 892.4,
+          "drawdown": 167.6
+        },
+        {
+          "batch_key": "E0_2025-W43",
+          "time_utc": "2025-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 886.2,
+          "drawdown": 173.8
+        },
+        {
+          "batch_key": "D1_2025-W44",
+          "time_utc": "2025-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 903.5,
+          "drawdown": 156.5
+        },
+        {
+          "batch_key": "E0_2025-W44",
+          "time_utc": "2025-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 900.0,
+          "drawdown": 160.0
+        },
+        {
+          "batch_key": "D1_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 921.1,
+          "drawdown": 138.9
+        },
+        {
+          "batch_key": "E0_2025-W45",
+          "time_utc": "2025-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 942.4,
+          "drawdown": 117.6
+        },
+        {
+          "batch_key": "D1_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 941.8,
+          "drawdown": 118.2
+        },
+        {
+          "batch_key": "E0_2025-W46",
+          "time_utc": "2025-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 947.4,
+          "drawdown": 112.6
+        },
+        {
+          "batch_key": "E0_2025-W47",
+          "time_utc": "2025-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 917.4,
+          "drawdown": 142.6
+        },
+        {
+          "batch_key": "E0_2025-W48",
+          "time_utc": "2025-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 902.6,
+          "drawdown": 157.4
+        },
+        {
+          "batch_key": "E0_2025-W49",
+          "time_utc": "2025-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 895.9,
+          "drawdown": 164.1
+        },
+        {
+          "batch_key": "E0_2025-W50",
+          "time_utc": "2025-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 891.2,
+          "drawdown": 168.8
+        }
+      ]
+    },
+    {
+      "model_id": "lgbm",
+      "split": "train",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 22,
+          "n_abstain": 124,
+          "turnover": 220.0,
+          "profit": -90.6,
+          "roi": -0.4118181818181818,
+          "max_drawdown": 97.0,
+          "mean_clv": -0.018409183837885645,
+          "sharpe_per_matchweek": -0.4516293244123629,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "FAILS_STRESS": 66,
+            "EV_BELOW_THRESHOLD": 57,
+            "ACCEPTED": 22,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.8079999999999999,
+              0.009163533834585793
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 116,
+          "n_abstain": 30,
+          "turnover": 1160.0,
+          "profit": -404.70000000000005,
+          "roi": -0.3488793103448276,
+          "max_drawdown": 409.80000000000007,
+          "mean_clv": -0.018628047688804043,
+          "sharpe_per_matchweek": -0.6043584131009956,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 116,
+            "EV_BELOW_THRESHOLD": 30
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.5350998152254249,
+              -0.15434069775451167
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "D1_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1003.9,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 1006.4,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2022-W34",
+          "time_utc": "2022-08-26T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 996.4,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "E0_2022-W36",
+          "time_utc": "2022-09-03T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 986.4,
+          "drawdown": 20.0
+        },
+        {
+          "batch_key": "D1_2022-W38",
+          "time_utc": "2022-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 966.4,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "E0_2022-W38",
+          "time_utc": "2022-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 946.4,
+          "drawdown": 60.0
+        },
+        {
+          "batch_key": "E0_2022-W39",
+          "time_utc": "2022-09-30T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 959.4,
+          "drawdown": 47.0
+        },
+        {
+          "batch_key": "D1_2022-W40",
+          "time_utc": "2022-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 949.4,
+          "drawdown": 57.0
+        },
+        {
+          "batch_key": "E0_2022-W40",
+          "time_utc": "2022-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 947.1,
+          "drawdown": 59.3
+        },
+        {
+          "batch_key": "D1_2022-W42",
+          "time_utc": "2022-10-15T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 937.1,
+          "drawdown": 69.3
+        },
+        {
+          "batch_key": "E0_2022-W43",
+          "time_utc": "2022-10-28T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 927.1,
+          "drawdown": 79.3
+        },
+        {
+          "batch_key": "D1_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 944.9,
+          "drawdown": 61.5
+        },
+        {
+          "batch_key": "E0_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 934.9,
+          "drawdown": 71.5
+        },
+        {
+          "batch_key": "E0_2022-W45",
+          "time_utc": "2022-11-11T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 924.9,
+          "drawdown": 81.5
+        },
+        {
+          "batch_key": "E0_2022-W48",
+          "time_utc": "2022-12-02T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 929.4,
+          "drawdown": 77.0
+        },
+        {
+          "batch_key": "E0_2022-W49",
+          "time_utc": "2022-12-03T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 909.4,
+          "drawdown": 97.0
+        },
+        {
+          "batch_key": "D1_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 999.6,
+          "drawdown": 0.4
+        },
+        {
+          "batch_key": "E0_2022-W32",
+          "time_utc": "2022-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1002.2,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2022-W33",
+          "time_utc": "2022-08-13T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1005.1,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2022-W33",
+          "time_utc": "2022-08-13T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 965.1,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "D1_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 947.6,
+          "drawdown": 57.5
+        },
+        {
+          "batch_key": "E0_2022-W34",
+          "time_utc": "2022-08-20T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 929.4,
+          "drawdown": 75.7
+        },
+        {
+          "batch_key": "E0_2022-W35",
+          "time_utc": "2022-08-27T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 916.6,
+          "drawdown": 88.5
+        },
+        {
+          "batch_key": "D1_2022-W35",
+          "time_utc": "2022-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 896.6,
+          "drawdown": 108.5
+        },
+        {
+          "batch_key": "E0_2022-W36",
+          "time_utc": "2022-09-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 911.5,
+          "drawdown": 93.6
+        },
+        {
+          "batch_key": "D1_2022-W36",
+          "time_utc": "2022-09-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 893.9,
+          "drawdown": 111.2
+        },
+        {
+          "batch_key": "D1_2022-W37",
+          "time_utc": "2022-09-10T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 911.4,
+          "drawdown": 93.7
+        },
+        {
+          "batch_key": "E0_2022-W37",
+          "time_utc": "2022-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 901.4,
+          "drawdown": 103.7
+        },
+        {
+          "batch_key": "E0_2022-W38",
+          "time_utc": "2022-09-17T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 874.0,
+          "drawdown": 131.1
+        },
+        {
+          "batch_key": "D1_2022-W38",
+          "time_utc": "2022-09-17T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 834.0,
+          "drawdown": 171.1
+        },
+        {
+          "batch_key": "E0_2022-W39",
+          "time_utc": "2022-09-24T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 852.2,
+          "drawdown": 152.9
+        },
+        {
+          "batch_key": "D1_2022-W39",
+          "time_utc": "2022-09-24T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 822.2,
+          "drawdown": 182.9
+        },
+        {
+          "batch_key": "E0_2022-W40",
+          "time_utc": "2022-10-01T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 803.3,
+          "drawdown": 201.8
+        },
+        {
+          "batch_key": "D1_2022-W40",
+          "time_utc": "2022-10-01T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 773.3,
+          "drawdown": 231.8
+        },
+        {
+          "batch_key": "E0_2022-W41",
+          "time_utc": "2022-10-08T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 749.4,
+          "drawdown": 255.7
+        },
+        {
+          "batch_key": "D1_2022-W41",
+          "time_utc": "2022-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 742.3,
+          "drawdown": 262.8
+        },
+        {
+          "batch_key": "D1_2022-W42",
+          "time_utc": "2022-10-15T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 772.2,
+          "drawdown": 232.9
+        },
+        {
+          "batch_key": "E0_2022-W42",
+          "time_utc": "2022-10-15T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 783.4,
+          "drawdown": 221.7
+        },
+        {
+          "batch_key": "E0_2022-W43",
+          "time_utc": "2022-10-22T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 784.3,
+          "drawdown": 220.8
+        },
+        {
+          "batch_key": "D1_2022-W43",
+          "time_utc": "2022-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 754.3,
+          "drawdown": 250.8
+        },
+        {
+          "batch_key": "D1_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 752.1,
+          "drawdown": 253.0
+        },
+        {
+          "batch_key": "E0_2022-W44",
+          "time_utc": "2022-10-29T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 702.1,
+          "drawdown": 303.0
+        },
+        {
+          "batch_key": "D1_2022-W45",
+          "time_utc": "2022-11-05T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 662.1,
+          "drawdown": 343.0
+        },
+        {
+          "batch_key": "E0_2022-W45",
+          "time_utc": "2022-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 642.1,
+          "drawdown": 363.0
+        },
+        {
+          "batch_key": "D1_2022-W46",
+          "time_utc": "2022-11-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 632.1,
+          "drawdown": 373.0
+        },
+        {
+          "batch_key": "E0_2022-W46",
+          "time_utc": "2022-11-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 623.9,
+          "drawdown": 381.2
+        },
+        {
+          "batch_key": "E0_2022-W47",
+          "time_utc": "2022-11-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 648.9,
+          "drawdown": 356.2
+        },
+        {
+          "batch_key": "E0_2022-W48",
+          "time_utc": "2022-11-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 635.3,
+          "drawdown": 369.8
+        },
+        {
+          "batch_key": "E0_2022-W49",
+          "time_utc": "2022-12-03T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 605.3,
+          "drawdown": 399.8
+        },
+        {
+          "batch_key": "E0_2022-W50",
+          "time_utc": "2022-12-10T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 595.3,
+          "drawdown": 409.8
+        }
+      ]
+    },
+    {
+      "model_id": "lgbm",
+      "split": "validation",
+      "is_locked_holdout": false,
+      "policies": [
+        {
+          "policy_id": "controlled",
+          "label": "Threshold + stress + data checks + exposure caps",
+          "n_decisions": 146,
+          "n_bets": 22,
+          "n_abstain": 124,
+          "turnover": 220.0,
+          "profit": -35.6,
+          "roi": -0.16181818181818183,
+          "max_drawdown": 120.5,
+          "mean_clv": -0.004179832577632729,
+          "sharpe_per_matchweek": -0.10489333344529962,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "EV_BELOW_THRESHOLD": 62,
+            "FAILS_STRESS": 61,
+            "ACCEPTED": 22,
+            "STALE_QUOTE": 1
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.8008033661740558,
+              0.6590794534412948
+            ]
+          }
+        },
+        {
+          "policy_id": "naive",
+          "label": "EV > 0 at offered odds, no checks, flat stakes",
+          "n_decisions": 146,
+          "n_bets": 118,
+          "n_abstain": 28,
+          "turnover": 1180.0,
+          "profit": 72.79999999999998,
+          "roi": 0.06169491525423727,
+          "max_drawdown": 253.39999999999998,
+          "mean_clv": -0.014319670762616372,
+          "sharpe_per_matchweek": 0.06664643983277713,
+          "deflated_sharpe": null,
+          "reason_counts": {
+            "ACCEPTED": 118,
+            "EV_BELOW_THRESHOLD": 28
+          },
+          "bootstrap_ci_95": {
+            "roi": [
+              -0.25826624812593696,
+              0.3786329740591888
+            ]
+          }
+        }
+      ],
+      "equity_curve": [
+        {
+          "batch_key": "E0_2024-W33",
+          "time_utc": "2024-08-13T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 990.0,
+          "drawdown": 10.0
+        },
+        {
+          "batch_key": "D1_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 970.0,
+          "drawdown": 30.0
+        },
+        {
+          "batch_key": "E0_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 960.0,
+          "drawdown": 40.0
+        },
+        {
+          "batch_key": "D1_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 950.0,
+          "drawdown": 50.0
+        },
+        {
+          "batch_key": "E0_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 940.0,
+          "drawdown": 60.0
+        },
+        {
+          "batch_key": "E0_2024-W40",
+          "time_utc": "2024-10-01T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 930.0,
+          "drawdown": 70.0
+        },
+        {
+          "batch_key": "D1_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 928.6,
+          "drawdown": 71.4
+        },
+        {
+          "batch_key": "E0_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 928.9,
+          "drawdown": 71.1
+        },
+        {
+          "batch_key": "D1_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 918.9,
+          "drawdown": 81.1
+        },
+        {
+          "batch_key": "D1_2024-W44",
+          "time_utc": "2024-10-28T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 929.5,
+          "drawdown": 70.5
+        },
+        {
+          "batch_key": "D1_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 919.5,
+          "drawdown": 80.5
+        },
+        {
+          "batch_key": "E0_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 909.5,
+          "drawdown": 90.5
+        },
+        {
+          "batch_key": "D1_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 879.5,
+          "drawdown": 120.5
+        },
+        {
+          "batch_key": "E0_2024-W48",
+          "time_utc": "2024-11-25T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 924.6,
+          "drawdown": 75.4
+        },
+        {
+          "batch_key": "E0_2024-W49",
+          "time_utc": "2024-12-03T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 914.6,
+          "drawdown": 85.4
+        },
+        {
+          "batch_key": "E0_2024-W50",
+          "time_utc": "2024-12-09T00:00:00Z",
+          "policy_id": "controlled",
+          "bankroll": 964.4,
+          "drawdown": 35.6
+        },
+        {
+          "batch_key": "D1_2024-W33",
+          "time_utc": "2024-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 970.0,
+          "drawdown": 30.0
+        },
+        {
+          "batch_key": "E0_2024-W33",
+          "time_utc": "2024-08-12T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1035.0,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2024-W34",
+          "time_utc": "2024-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1040.9,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2024-W34",
+          "time_utc": "2024-08-19T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1076.8,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "D1_2024-W35",
+          "time_utc": "2024-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1070.3,
+          "drawdown": 6.5
+        },
+        {
+          "batch_key": "E0_2024-W35",
+          "time_utc": "2024-08-26T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1046.5,
+          "drawdown": 30.3
+        },
+        {
+          "batch_key": "D1_2024-W36",
+          "time_utc": "2024-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1028.9,
+          "drawdown": 47.9
+        },
+        {
+          "batch_key": "E0_2024-W36",
+          "time_utc": "2024-09-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1084.1,
+          "drawdown": 0.0
+        },
+        {
+          "batch_key": "E0_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1054.1,
+          "drawdown": 30.0
+        },
+        {
+          "batch_key": "D1_2024-W37",
+          "time_utc": "2024-09-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1014.1,
+          "drawdown": 70.0
+        },
+        {
+          "batch_key": "E0_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 974.1,
+          "drawdown": 110.0
+        },
+        {
+          "batch_key": "D1_2024-W38",
+          "time_utc": "2024-09-16T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 958.4,
+          "drawdown": 125.7
+        },
+        {
+          "batch_key": "E0_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 971.4,
+          "drawdown": 112.7
+        },
+        {
+          "batch_key": "D1_2024-W39",
+          "time_utc": "2024-09-23T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 953.0,
+          "drawdown": 131.1
+        },
+        {
+          "batch_key": "E0_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 913.0,
+          "drawdown": 171.1
+        },
+        {
+          "batch_key": "D1_2024-W40",
+          "time_utc": "2024-09-30T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 893.0,
+          "drawdown": 191.1
+        },
+        {
+          "batch_key": "E0_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 912.7,
+          "drawdown": 171.4
+        },
+        {
+          "batch_key": "D1_2024-W41",
+          "time_utc": "2024-10-07T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 901.3,
+          "drawdown": 182.8
+        },
+        {
+          "batch_key": "D1_2024-W42",
+          "time_utc": "2024-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 871.3,
+          "drawdown": 212.8
+        },
+        {
+          "batch_key": "E0_2024-W42",
+          "time_utc": "2024-10-14T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 841.3,
+          "drawdown": 242.8
+        },
+        {
+          "batch_key": "D1_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 830.7,
+          "drawdown": 253.4
+        },
+        {
+          "batch_key": "E0_2024-W43",
+          "time_utc": "2024-10-21T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 839.9,
+          "drawdown": 244.2
+        },
+        {
+          "batch_key": "D1_2024-W44",
+          "time_utc": "2024-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 853.8,
+          "drawdown": 230.3
+        },
+        {
+          "batch_key": "E0_2024-W44",
+          "time_utc": "2024-10-28T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 860.3,
+          "drawdown": 223.8
+        },
+        {
+          "batch_key": "D1_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 881.5,
+          "drawdown": 202.6
+        },
+        {
+          "batch_key": "E0_2024-W45",
+          "time_utc": "2024-11-04T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 886.5,
+          "drawdown": 197.6
+        },
+        {
+          "batch_key": "D1_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 856.5,
+          "drawdown": 227.6
+        },
+        {
+          "batch_key": "E0_2024-W46",
+          "time_utc": "2024-11-11T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 844.9,
+          "drawdown": 239.2
+        },
+        {
+          "batch_key": "E0_2024-W47",
+          "time_utc": "2024-11-18T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 896.5,
+          "drawdown": 187.6
+        },
+        {
+          "batch_key": "E0_2024-W48",
+          "time_utc": "2024-11-25T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 933.5,
+          "drawdown": 150.6
+        },
+        {
+          "batch_key": "E0_2024-W49",
+          "time_utc": "2024-12-02T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1025.8,
+          "drawdown": 58.3
+        },
+        {
+          "batch_key": "E0_2024-W50",
+          "time_utc": "2024-12-09T00:00:00Z",
+          "policy_id": "naive",
+          "bankroll": 1072.8,
+          "drawdown": 11.3
+        }
+      ]
+    }
+  ]
+}
