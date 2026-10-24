@@ -32,6 +32,23 @@ Last updated: 2026-10-24
 
 **Recommended model for freeze: marketnet** (lowest log loss, statistically significant edge over market).
 
+## 4-year OOS robustness test (2021-22 to 2024-25, 11,809 matches)
+
+Training window: 2005-06 to 2020-21 (calibration: 2020-21). Models never saw 2021-25 data.
+
+| Model | Log loss | vs market |
+|---|---|---|
+| marketnet | **0.9710** | −0.0005 ✓ edge holds |
+| market | 0.9715 | baseline |
+| lgbm | 0.9741 | +0.0026 ✗ worse than market over 4 years |
+
+**Key finding:** marketnet's edge is robust across 4 unseen seasons. lgbm overfits to recent patterns and loses its edge. v1.1 exponential weighting confirmed as the right choice for robustness.
+
+**Betting simulation** (bet when model prob > market fair prob, pay offered odds):
+- marketnet: 17,047 bets, −3.7% ROI — edge does not cover Bet365's ~6.1% overround
+- 1-year naive policy (2024-25, production split): lgbm +1.0% ROI [−8.9%, +10.8%]
+- Profit requires exchange betting (no margin) or multi-bookmaker line shopping
+
 ## Stubbed or partial
 
 - **holdout_locked.json**: Written at the freeze only (`python -m evaluation.lock_holdout`). Refuses to overwrite.
